@@ -46,6 +46,7 @@ typedef NS_ENUM (NSInteger, DayState){
 @property (nonatomic, assign) NSInteger maxDayOfCurrentMonth;
 @property (nonatomic, strong) LBCMonthView *monthView;
 @property (nonatomic, strong) LBCCalendarHeaderView *headerView;
+@property (nonatomic, strong) UIView *calendarView;
 @property (nonatomic, assign) NSInteger currentMonth;
 @property (nonatomic, strong) NSArray * selectionArray;
 
@@ -77,6 +78,12 @@ typedef NS_ENUM (NSInteger, DayState){
 
 
 
+- (void) updateCalendarFrame:(CGRect)newFrame;
+
+
+
 - (NSString *)getCurrentMonthName;
+
+
 
 @end

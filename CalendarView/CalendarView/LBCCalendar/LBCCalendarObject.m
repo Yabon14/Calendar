@@ -31,8 +31,16 @@
     self = [super init];
     if (self){
         self.currentMonth = 0;
+//        [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
+//        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orientationChanged:) name:UIDeviceOrientationDidChangeNotification object:nil];
     }
     return self;
+}
+
+
+-(void) dealloc{
+//    [[NSNotificationCenter defaultCenter] removeObserver: self];
+//    [[UIDevice currentDevice] endGeneratingDeviceOrientationNotifications];
 }
 
 
@@ -145,7 +153,7 @@
     CGFloat height = frame.size.height / MAX_WEEK_PER_MONTH;
     CGFloat size = height < width ? height : width;
 
-    UIView *calendarView = [[UIView alloc] initWithFrame:frame];
+    self.calendarView = [[UIView alloc] initWithFrame:frame];
 
     self.monthView = [[LBCMonthView alloc] initWithCalendarObject:self
                                                          andFrame:CGRectMake(0,
@@ -153,17 +161,18 @@
                                                                     frame.size.width,
                                                                     frame.size.height - size)];
     [self.monthView refreshView];
-    [calendarView addSubview:self.monthView];
+    [self.calendarView addSubview:self.monthView];
     
-    self.headerView = [[LBCCalendarHeaderView alloc] initWithFrame:CGRectMake(0,
+    CGFloat calendarWidth = (self.monthView.center.x - self.monthView.xPosition) * 2.f;
+    self.headerView = [[LBCCalendarHeaderView alloc] initWithFrame:CGRectMake(self.monthView.xPosition,
                                                                               self.monthView.frame.origin.y + self.monthView.yPosition - size,
-                                                                              frame.size.width,
+                                                                              calendarWidth,
                                                                               size)
                                                  andCalendarObject:self];
-    [calendarView addSubview:self.headerView];
-    
-    
-    return calendarView;
+    [self.calendarView addSubview:self.headerView];
+    [self addSelectionForCurrentMonth];
+
+    return self.calendarView;
 }
 
 
@@ -198,6 +207,26 @@
     self.headerView.monthLabel.text = [self getCurrentMonthName];
 }
 
+
+
+- (void) orientationChanged:(CGRect)notification {
+    
+    UIView *superView = self.calendarView.superview;
+    CGRect newFrame = superView.frame;
+    [self updateCalendarFrame:newFrame];
+}
+
+
+
+- (void) updateCalendarFrame:(CGRect)newFrame{
+    UIView *superView = self.calendarView.superview;
+    [self.calendarView removeFromSuperview];
+    self.calendarView = nil;
+    self.monthView = nil;
+    self.headerView = nil;
+    
+    [superView addSubview:[self buildCalendarViewInFrame:newFrame]];
+}
 
 @end
 

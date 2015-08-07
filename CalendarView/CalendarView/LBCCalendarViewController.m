@@ -63,5 +63,10 @@
     [self.calendarObject addSelectionFromDate:startDate toDate:endDate];
 }
 
+
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id <UIViewControllerTransitionCoordinator>)coordinator{
+    [self.calendarObject updateCalendarFrame:CGRectMake(0, 0, size.width, size.height)];
+}
+
 @end
 
