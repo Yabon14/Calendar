@@ -12,7 +12,7 @@
 
 #define SELECTED_HEIGHT_COEFF       0.8f    // height of selection = cell height * SELECTED_HEIGHT_COEFF
 #define TITLE_HEADER_COEFF          2/3     // height of month label = height of hedaer view * TITLE_HEADER_COEFF
-#define RADIUS_CELL                 25      // For curve effect on selection
+#define RADIUS_CELL_COEFF           0.5f    // For curve effect on selection
 
 #define LEFT_ARROW_TAG              1000
 #define RIGHT_ARROW_TAG             1001

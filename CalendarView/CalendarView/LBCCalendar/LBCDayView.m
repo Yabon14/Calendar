@@ -74,7 +74,7 @@
             break;
     }
 
-    
+    CGFloat radiusSize = RADIUS_CELL_COEFF * self.frame.size.height;
     switch (state) {
             case dayStateUnactive:
                 self.dayLabel.textColor = [UIColor clearColor];
@@ -87,7 +87,7 @@
                 frame.size.width += 5.f;
                 maskPath = [UIBezierPath bezierPathWithRoundedRect:frame
                                                  byRoundingCorners:(UIRectCornerTopLeft|UIRectCornerBottomLeft)
-                                                       cornerRadii:CGSizeMake(RADIUS_CELL, RADIUS_CELL)];
+                                                       cornerRadii:CGSizeMake(radiusSize, radiusSize)];
                 break;
             }
             
@@ -103,14 +103,14 @@
                 frame.origin.x -= 5.f;
                 maskPath = [UIBezierPath bezierPathWithRoundedRect:frame
                                                  byRoundingCorners:(UIRectCornerTopRight|UIRectCornerBottomRight)
-                                                       cornerRadii:CGSizeMake(RADIUS_CELL, RADIUS_CELL)];
+                                                       cornerRadii:CGSizeMake(radiusSize, radiusSize)];
                 break;
             }
                 
             case dayStateBothSelected:{
                 maskPath = [UIBezierPath bezierPathWithRoundedRect:frame
                                                  byRoundingCorners:(UIRectCornerTopRight|UIRectCornerBottomRight|UIRectCornerTopLeft|UIRectCornerBottomLeft)
-                                                       cornerRadii:CGSizeMake(RADIUS_CELL, RADIUS_CELL)];
+                                                       cornerRadii:CGSizeMake(radiusSize, radiusSize)];
                 break;
             }
                 
