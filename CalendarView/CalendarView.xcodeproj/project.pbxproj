@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1C514C061B74D31A001216B0 /* LBCCalendarHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C514BFF1B74D31A001216B0 /* LBCCalendarHeaderView.m */; };
+		1C514C071B74D31A001216B0 /* LBCCalendarObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C514C011B74D31A001216B0 /* LBCCalendarObject.m */; };
+		1C514C081B74D31A001216B0 /* LBCDayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C514C031B74D31A001216B0 /* LBCDayView.m */; };
+		1C514C091B74D31A001216B0 /* LBCMonthView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C514C051B74D31A001216B0 /* LBCMonthView.m */; };
 		1CA9289E1B74B4E900E38A33 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CA9289D1B74B4E900E38A33 /* main.m */; };
 		1CA928A11B74B4E900E38A33 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CA928A01B74B4E900E38A33 /* AppDelegate.m */; };
 		1CA928A41B74B4E900E38A33 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CA928A31B74B4E900E38A33 /* ViewController.m */; };
@@ -28,6 +32,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1C514BFE1B74D31A001216B0 /* LBCCalendarHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LBCCalendarHeaderView.h; sourceTree = "<group>"; };
+		1C514BFF1B74D31A001216B0 /* LBCCalendarHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LBCCalendarHeaderView.m; sourceTree = "<group>"; };
+		1C514C001B74D31A001216B0 /* LBCCalendarObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LBCCalendarObject.h; sourceTree = "<group>"; };
+		1C514C011B74D31A001216B0 /* LBCCalendarObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LBCCalendarObject.m; sourceTree = "<group>"; };
+		1C514C021B74D31A001216B0 /* LBCDayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LBCDayView.h; sourceTree = "<group>"; };
+		1C514C031B74D31A001216B0 /* LBCDayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LBCDayView.m; sourceTree = "<group>"; };
+		1C514C041B74D31A001216B0 /* LBCMonthView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LBCMonthView.h; sourceTree = "<group>"; };
+		1C514C051B74D31A001216B0 /* LBCMonthView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LBCMonthView.m; sourceTree = "<group>"; };
 		1CA928981B74B4E900E38A33 /* CalendarView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CalendarView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1CA9289C1B74B4E900E38A33 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1CA9289D1B74B4E900E38A33 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -63,6 +75,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1C514BFD1B74D31A001216B0 /* LBCCalendar */ = {
+			isa = PBXGroup;
+			children = (
+				1C514BFE1B74D31A001216B0 /* LBCCalendarHeaderView.h */,
+				1C514BFF1B74D31A001216B0 /* LBCCalendarHeaderView.m */,
+				1C514C001B74D31A001216B0 /* LBCCalendarObject.h */,
+				1C514C011B74D31A001216B0 /* LBCCalendarObject.m */,
+				1C514C021B74D31A001216B0 /* LBCDayView.h */,
+				1C514C031B74D31A001216B0 /* LBCDayView.m */,
+				1C514C041B74D31A001216B0 /* LBCMonthView.h */,
+				1C514C051B74D31A001216B0 /* LBCMonthView.m */,
+			);
+			path = LBCCalendar;
+			sourceTree = "<group>";
+		};
 		1CA9288F1B74B4E900E38A33 = {
 			isa = PBXGroup;
 			children = (
@@ -84,6 +111,7 @@
 		1CA9289A1B74B4E900E38A33 /* CalendarView */ = {
 			isa = PBXGroup;
 			children = (
+				1C514BFD1B74D31A001216B0 /* LBCCalendar */,
 				1CA928C11B74B51400E38A33 /* LBCCalendarViewController.h */,
 				1CA928C21B74B51400E38A33 /* LBCCalendarViewController.m */,
 				1CA9289F1B74B4E900E38A33 /* AppDelegate.h */,
@@ -225,6 +253,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				1CA928C31B74B51400E38A33 /* LBCCalendarViewController.m in Sources */,
+				1C514C081B74D31A001216B0 /* LBCDayView.m in Sources */,
+				1C514C061B74D31A001216B0 /* LBCCalendarHeaderView.m in Sources */,
+				1C514C091B74D31A001216B0 /* LBCMonthView.m in Sources */,
+				1C514C071B74D31A001216B0 /* LBCCalendarObject.m in Sources */,
 				1CA928A41B74B4E900E38A33 /* ViewController.m in Sources */,
 				1CA928A11B74B4E900E38A33 /* AppDelegate.m in Sources */,
 				1CA9289E1B74B4E900E38A33 /* main.m in Sources */,
@@ -424,6 +456,7 @@
 				1CA928BD1B74B4E900E38A33 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		1CA928BE1B74B4E900E38A33 /* Build configuration list for PBXNativeTarget "CalendarViewTests" */ = {
 			isa = XCConfigurationList;
@@ -432,6 +465,7 @@
 				1CA928C01B74B4E900E38A33 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
