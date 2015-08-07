@@ -113,69 +113,70 @@
 
 @implementation LBCMonthView
 
-- (id) initWithMonthName:(NSString *)monthName
-     firstDayOnLastMonth:(NSInteger)firstDayOfLastMonth
-       maxDayOfLastMonth:(NSInteger)maxDayOfLastMonth
-    maxDayOfCurrentMonth:(NSInteger)maxDayOfCurrentMonth
-                andFrame:(CGRect)frame
+- (id) initWithCalendarObject:(LBCCalendarObject *)calendarObject andFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self){
         self.backgroundColor = [UIColor whiteColor];
-        NSMutableArray *tmpArray = [[NSMutableArray alloc] init];
-        
+        self.calendarObject = calendarObject;
         CGFloat width = self.frame.size.width / MAX_DAY_PER_WEEK;
         CGFloat height = self.frame.size.height / MAX_WEEK_PER_MONTH;
-        CGFloat size = height < width ? height : width;
-        CGFloat xPosition = self.frame.size.width * 0.5f - size * MAX_DAY_PER_WEEK * 0.5f;
-        CGFloat yPosition = self.frame.size.height * 0.5f - size * MAX_WEEK_PER_MONTH * 0.5f;
-        self.startYPos = yPosition;
-
-        for (int week = 0 ; week < MAX_WEEK_PER_MONTH; week++) {
-            for (int weekDay = 0 ; weekDay < MAX_DAY_PER_WEEK; weekDay++) {
-                NSDateComponents *components = [[NSCalendar currentCalendar] components: NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitWeekday | NSCalendarUnitDay fromDate:[NSDate date]];
-                components.weekday = weekDay;
-                NSInteger monthDay = week * MAX_DAY_PER_WEEK + weekDay;
-
-                NSInteger currentDay;
-                DayState dayState = dayStateUnselected;
-                
-                if (firstDayOfLastMonth + monthDay <= maxDayOfLastMonth){
-                    components.month--;
-                    currentDay = firstDayOfLastMonth + monthDay;
-                    dayState = dayStateUnactive;
-                }
-                else {
-                    currentDay = monthDay - (maxDayOfLastMonth - firstDayOfLastMonth);
-                    if (currentDay > maxDayOfCurrentMonth){
-                        currentDay = monthDay - (maxDayOfCurrentMonth + (maxDayOfLastMonth - firstDayOfLastMonth));
-                        dayState = dayStateUnactive;
-                        components.month++;
-                    }
-                }
-                components.day = currentDay;
-                
-                CGRect frame = CGRectMake(xPosition + weekDay * size,
-                                          yPosition + week * size,
-                                          size,
-                                          size);
-                LBCDayView *dayView = [[LBCDayView alloc] initWithComponent:components
-                                                          andDayState:dayState
-                                                             andFrame:frame];
-                [tmpArray addObject:dayView];
-                [self addSubview:dayView];
-            }
-        }
-        self.dayArray = [NSArray arrayWithArray:tmpArray];
+        self.size = height < width ? height : width;
+        self.xPosition = self.frame.size.width * 0.5f - self.size * MAX_DAY_PER_WEEK * 0.5f;
+        self.yPosition = self.frame.size.height * 0.5f - self.size * MAX_WEEK_PER_MONTH * 0.5f;
     }
     return self;
 }
 
 
-- (void) drawRect:(CGRect)rect{
 
+#define DAY_TAG_VIEW        1002
+- (void) refreshView{
     
+    for (UIView* v in self.subviews){
+        if (v.tag == DAY_TAG_VIEW)
+            [v removeFromSuperview];
+    }
     
+    NSMutableArray *tmpArray = [[NSMutableArray alloc] init];
+    
+    for (int week = 0 ; week < MAX_WEEK_PER_MONTH; week++) {
+        for (int weekDay = 0 ; weekDay < MAX_DAY_PER_WEEK; weekDay++) {
+            NSDateComponents *components = [[NSCalendar currentCalendar] components: NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitWeekday | NSCalendarUnitDay fromDate:[NSDate date]];
+            components.weekday = weekDay;
+            NSInteger monthDay = week * MAX_DAY_PER_WEEK + weekDay;
+            
+            NSInteger currentDay;
+            DayState dayState = dayStateUnselected;
+            
+            if (self.calendarObject.firstDayOfLastMonth + monthDay <= self.calendarObject.maxDayOfLastMonth){
+                components.month--;
+                currentDay = self.calendarObject.firstDayOfLastMonth + monthDay;
+                dayState = dayStateUnactive;
+            }
+            else {
+                currentDay = monthDay - (self.calendarObject.maxDayOfLastMonth - self.calendarObject.firstDayOfLastMonth);
+                if (currentDay > self.calendarObject.maxDayOfCurrentMonth){
+                    currentDay = monthDay - (self.calendarObject.maxDayOfCurrentMonth + (self.calendarObject.maxDayOfLastMonth - self.calendarObject.firstDayOfLastMonth));
+                    dayState = dayStateUnactive;
+                    components.month++;
+                }
+            }
+            components.day = currentDay;
+            
+            CGRect frame = CGRectMake(self.xPosition + weekDay * self.size,
+                                      self.yPosition + week * self.size,
+                                      self.size,
+                                      self.size);
+            LBCDayView *dayView = [[LBCDayView alloc] initWithComponent:components
+                                                            andDayState:dayState
+                                                               andFrame:frame];
+            dayView.tag = DAY_TAG_VIEW;
+            [tmpArray addObject:dayView];
+            [self addSubview:dayView];
+        }
+    }
+    self.dayArray = [NSArray arrayWithArray:tmpArray];
 }
 
 
@@ -187,28 +188,21 @@
 #define TITLE_HEADER_COEFF          2/3
 #define LEFT_ARROW_TAG              1000
 #define RIGHT_ARROW_TAG             1001
+#define FIRST_DAY_FIX_VALUE         9999
 
 @implementation LBCCalendarHeaderView
 
 - (id)initWithFrame:(CGRect)frame andCalendarObject:(LBCCalendarObject *)calendarObject{
     self = [super initWithFrame:frame];
     if (self){
-        NSDateComponents *dateComponents = [[NSDateComponents alloc] init];
-        [dateComponents setMonth:calendarObject.currentMonth];
-        NSDate *dateForCurrentMonth = [[NSCalendar currentCalendar] dateByAddingComponents:dateComponents toDate:[NSDate date] options:0];
-        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-        [formatter setDateFormat:@"MMMM"];
-        NSString *stringFromDate = [formatter stringFromDate:dateForCurrentMonth];
-        
         CGFloat buttonSize = frame.size.height * TITLE_HEADER_COEFF;
-        
-        UILabel *monthLabel = [[UILabel alloc] initWithFrame:CGRectMake(buttonSize,
+        self.monthLabel = [[UILabel alloc] initWithFrame:CGRectMake(buttonSize,
                                                                         0,
                                                                         frame.size.width - 2 * buttonSize,
                                                                         buttonSize)];
-        monthLabel.textAlignment = NSTextAlignmentCenter;
-        monthLabel.text = stringFromDate;
-        [self addSubview:monthLabel];
+        self.monthLabel.textAlignment = NSTextAlignmentCenter;
+        self.monthLabel.text = [calendarObject getCurrentMonthName];
+        [self addSubview:self.monthLabel];
         
         
         UIButton *leftArrow = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, buttonSize, buttonSize)];
@@ -286,20 +280,20 @@
     }
 }
 
--(UIView *) buildCalendarViewInFrame:(CGRect) frame{
 
+- (void) configureCalendar{
     NSCalendar *calendar = [NSCalendar currentCalendar];
-
+    
     NSDateComponents *dateComponents = [[NSDateComponents alloc] init];
     [dateComponents setMonth:self.currentMonth];
     NSDate *dateForCurrentMonth = [calendar dateByAddingComponents:dateComponents toDate:[NSDate date] options:0];
     NSRange rng = [calendar rangeOfUnit:NSCalendarUnitDay inUnit:NSCalendarUnitMonth forDate:dateForCurrentMonth];
-    NSInteger numberOfDaysInCurrentMonth = rng.length;
+    self.maxDayOfCurrentMonth = rng.length;
     
     [dateComponents setMonth:self.currentMonth - 1];
     NSDate *dateForPreviousMonth = [calendar dateByAddingComponents:dateComponents toDate:[NSDate date] options:0];
     rng = [calendar rangeOfUnit:NSCalendarUnitDay inUnit:NSCalendarUnitMonth forDate:dateForPreviousMonth];
-    NSInteger numberOfDaysInPreviousMonth = rng.length;
+    self.maxDayOfLastMonth = rng.length;
     
     NSDateComponents *components = [calendar components:NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond | NSCalendarUnitWeekday | NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay fromDate:dateForCurrentMonth];
     [components setDay:1];
@@ -312,29 +306,42 @@
         firstDayToShow = [calendar dateByAddingComponents:comps toDate:firstDayToShow options:0];
         newComponents = [[NSCalendar currentCalendar] components: NSCalendarUnitWeekday | NSCalendarUnitDay fromDate:firstDayToShow];
     }
-    
-    NSDateFormatter *formate = [NSDateFormatter new];
-    NSArray *monthNames = [formate standaloneMonthSymbols];
-    NSString *monthName = [monthNames objectAtIndex:components.month - 1];
-    
-    
+    self.firstDayOfLastMonth = newComponents.day;
+    self.firstDayOfLastMonth = self.firstDayOfLastMonth == 1 ? self.maxDayOfLastMonth + 1 : self.firstDayOfLastMonth;
+}
+
+
+
+- (NSString *)getCurrentMonthName{
+    NSDateComponents *dateComponents = [[NSDateComponents alloc] init];
+    [dateComponents setMonth:self.currentMonth];
+    NSDate *dateForCurrentMonth = [[NSCalendar currentCalendar] dateByAddingComponents:dateComponents toDate:[NSDate date] options:0];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"MMMM"];
+    NSString *stringFromDate = [formatter stringFromDate:dateForCurrentMonth];
+    return stringFromDate;
+}
+
+
+
+
+-(UIView *) buildCalendarViewInFrame:(CGRect) frame{
+
+    [self configureCalendar];
     
     CGFloat width = frame.size.width / MAX_DAY_PER_WEEK;
     CGFloat height = frame.size.height / MAX_WEEK_PER_MONTH;
     CGFloat size = height < width ? height : width;
     
-    self.monthView = [[LBCMonthView alloc] initWithMonthName:monthName
-                                         firstDayOnLastMonth:newComponents.day
-                                           maxDayOfLastMonth:numberOfDaysInPreviousMonth
-                                        maxDayOfCurrentMonth:numberOfDaysInCurrentMonth
-                                                    andFrame:CGRectMake(0,
-                                                                        size,
-                                                                        frame.size.width,
-                                                                        frame.size.height - size)];
-    
+    self.monthView = [[LBCMonthView alloc] initWithCalendarObject:self
+                                                         andFrame:CGRectMake(0,
+                                                                    size,
+                                                                    frame.size.width,
+                                                                    frame.size.height - size)];
+    [self.monthView refreshView];
     
     self.headerView = [[LBCCalendarHeaderView alloc] initWithFrame:CGRectMake(0,
-                                                                              self.monthView.startYPos - size,
+                                                                              self.monthView.yPosition - size,
                                                                               frame.size.width,
                                                                               size)
                                                  andCalendarObject:self];
@@ -353,6 +360,10 @@
     else if (b.tag == LEFT_ARROW_TAG){
         self.currentMonth--;
     }
+    
+    [self configureCalendar];
+    [self.monthView refreshView];
+    self.headerView.monthLabel.text = [self getCurrentMonthName];
 }
 
 
