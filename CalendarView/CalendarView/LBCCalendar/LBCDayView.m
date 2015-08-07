@@ -41,13 +41,39 @@
                               self.frame.size.width,
                               height);
 
-    if (self.selectedView){
-        [self.selectedView removeFromSuperview];
-        self.selectedView = nil;
+    switch (_dayState) {
+        case dayStateUnactive:
+            return;
+        case dayStateUnselected:
+            break;
+        case dayStateFirstSelected:
+            if (state == dayStateLastSelected){
+                state = dayStateSelected;
+            }
+            else if (state == dayStateBothSelected){
+                state = dayStateFirstSelected;
+            }
+            break;
+        case dayStateLastSelected:
+            if (state == dayStateFirstSelected){
+                state = dayStateSelected;
+            }
+            else if (state == dayStateBothSelected){
+                state = dayStateLastSelected;
+            }
+            break;
+        case dayStateSelected:
+            if (state == dayStateFirstSelected
+                || state == dayStateLastSelected
+                || state == dayStateBothSelected){
+                state = dayStateSelected;
+            }
+            break;
+            
+        default:
+            break;
     }
-    
-    if (_dayState == dayStateUnactive)
-        return;
+
     
     switch (state) {
             case dayStateUnactive:
@@ -66,10 +92,9 @@
             }
             
             case dayStateSelected:{
-                self.selectedView = [[UIView alloc] initWithFrame:frame];
-                self.selectedView.backgroundColor = [UIColor orangeColor];
-                [self addSubview:self.selectedView];
-                [self sendSubviewToBack:self.selectedView];
+                frame.size.width += 10.f;
+                frame.origin.x -= 5.f;
+                maskPath = [UIBezierPath bezierPathWithRect:frame];
                 break;
             }
             
@@ -92,8 +117,8 @@
             default:
                 break;
     }
-    
     _dayState = state;
+
     
     if (maskPath){
         CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
