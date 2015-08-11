@@ -14,8 +14,6 @@
 @property (nonatomic, strong) NSArray *dayArray;
 @property (nonatomic, strong) LBCCalendarObject *calendarObject;
 @property (nonatomic, assign) CGFloat size;
-@property (nonatomic, assign) CGFloat xPosition;
-@property (nonatomic, assign) CGFloat yPosition;
 
 - (id) initWithCalendarObject:(LBCCalendarObject *)calendarObject andFrame:(CGRect)frame;
 - (void) refreshView;

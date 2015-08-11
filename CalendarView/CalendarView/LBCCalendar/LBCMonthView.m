@@ -15,15 +15,18 @@
 
 - (id) initWithCalendarObject:(LBCCalendarObject *)calendarObject andFrame:(CGRect)frame
 {
-    self = [super initWithFrame:frame];
+    CGFloat width = frame.size.width / MAX_DAY_PER_WEEK;
+    CGFloat height = frame.size.height / MAX_WEEK_PER_MONTH;
+    CGFloat size = height < width ? height : width;
+    CGFloat xPosition = frame.size.width * 0.5f - size * MAX_DAY_PER_WEEK * 0.5f;
+    CGFloat yPosition = frame.size.height * 0.5f - size * MAX_WEEK_PER_MONTH * 0.5f;
+    
+    self = [super initWithFrame:CGRectMake(xPosition, yPosition, size * MAX_DAY_PER_WEEK, size * MAX_WEEK_PER_MONTH)];
     if (self){
-        self.backgroundColor = [UIColor whiteColor];
+        NSLog(@"month frame: %@", NSStringFromCGRect(self.frame));
+        self.backgroundColor = [UIColor clearColor];
         self.calendarObject = calendarObject;
-        CGFloat width = self.frame.size.width / MAX_DAY_PER_WEEK;
-        CGFloat height = self.frame.size.height / MAX_WEEK_PER_MONTH;
-        self.size = height < width ? height : width;
-        self.xPosition = self.frame.size.width * 0.5f - self.size * MAX_DAY_PER_WEEK * 0.5f;
-        self.yPosition = self.frame.size.height * 0.5f - self.size * MAX_WEEK_PER_MONTH * 0.5f;
+        self.size = size;
     }
     return self;
 }
@@ -43,7 +46,9 @@
             [dateComponents setMonth:self.calendarObject.currentMonth];
             NSDate *dateForCurrentMonth = [[NSCalendar currentCalendar] dateByAddingComponents:dateComponents toDate:[NSDate date] options:0];
             NSDateComponents *components = [[NSCalendar currentCalendar] components: NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitWeekday | NSCalendarUnitDay fromDate:dateForCurrentMonth];
-            components.weekday = weekDay;
+
+            components.weekday = weekDay == 0 ? weekDaySaturday : weekDay;
+            
             NSInteger monthDay = week * MAX_DAY_PER_WEEK + weekDay;
             
             NSInteger currentDay;
@@ -68,8 +73,8 @@
             }
             components.day = currentDay;
             
-            CGRect frame = CGRectMake(self.xPosition + weekDay * self.size,
-                                      self.yPosition + week * self.size,
+            CGRect frame = CGRectMake(weekDay * self.size,
+                                      week * self.size,
                                       self.size,
                                       self.size);
             LBCDayView *dayView = [[LBCDayView alloc] initWithComponent:components
