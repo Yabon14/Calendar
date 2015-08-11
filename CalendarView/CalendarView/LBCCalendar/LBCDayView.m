@@ -21,8 +21,10 @@
         NSString *labelText = [NSString stringWithFormat:@"%lu", (long)component.day];
         self.dayLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
         self.dayLabel.textAlignment = NSTextAlignmentCenter;
+        self.dayLabel.backgroundColor = [UIColor clearColor];
         self.dayLabel.text = labelText;
         [self addSubview:self.dayLabel];
+        self.backgroundColor = [UIColor clearColor];
         
         _dayState = dayStateUnselected;
         self.dayState = state;
