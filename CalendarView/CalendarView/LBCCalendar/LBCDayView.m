@@ -22,6 +22,10 @@
         self.dayLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
         self.dayLabel.textAlignment = NSTextAlignmentCenter;
         self.dayLabel.text = labelText;
+
+        self.dayLabel.textColor = C8;
+        self.dayLabel.highlightedTextColor = C6;
+        
         [self addSubview:self.dayLabel];
         
         _dayState = dayStateUnselected;
@@ -126,6 +130,7 @@
         maskLayer.path = maskPath.CGPath;
         self.layer.mask = maskLayer;
         self.backgroundColor = [UIColor orangeColor];
+        self.dayLabel.highlighted = YES;
     }
     
 }
