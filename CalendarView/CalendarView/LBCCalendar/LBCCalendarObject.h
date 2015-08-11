@@ -30,6 +30,17 @@ typedef NS_ENUM (NSInteger, DayState){
 };
 
 
+typedef NS_ENUM(NSInteger, WeekDay){
+    weekDaySunday = 1,
+    weekDayMonday,
+    weekDayTuesday,
+    weekDayWednesday,
+    weekDayThursday,
+    weekDayFriday,
+    weekDaySaturday,
+};
+
+
 @class LBCCalendarHeaderView, LBCMonthView;
 
 
@@ -46,7 +57,6 @@ typedef NS_ENUM (NSInteger, DayState){
 @property (nonatomic, assign) NSInteger maxDayOfCurrentMonth;
 @property (nonatomic, strong) LBCMonthView *monthView;
 @property (nonatomic, strong) LBCCalendarHeaderView *headerView;
-@property (nonatomic, strong) UIView *calendarView;
 @property (nonatomic, assign) NSInteger currentMonth;
 @property (nonatomic, strong) NSArray * selectionArray;
 
@@ -67,19 +77,10 @@ typedef NS_ENUM (NSInteger, DayState){
 - (void) addSelectionFromDate:(NSDate *)startDate toDate:(NSDate *)endDate;
 
 
-/**
- *  Build a calendar view insiode the frame given
- *
- *  @param frame
- *
- *  @return calendar view
- */
-- (UIView *) buildCalendarViewInFrame:(CGRect) frame;
+- (void) buildCalendarViewInView:(UIView *)view;
 
 
-
-- (void) updateCalendarFrame:(CGRect)newFrame;
-
+- (void) updateCalendarView:(UIView *)newView;
 
 
 - (NSString *)getCurrentMonthName;
