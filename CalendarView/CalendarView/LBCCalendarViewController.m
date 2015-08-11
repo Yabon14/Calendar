@@ -8,7 +8,7 @@
 
 #import "LBCCalendarViewController.h"
 #import "LBCCalendarObject.h"
-#import "LBCMonthView.h"
+#import "LBCCalendarMonthView.h"
 
 
 @implementation LBCCalendarViewController
@@ -25,6 +25,7 @@
     UITapGestureRecognizer *tg = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(addSelection:)];
     [self.view addGestureRecognizer:tg];
 
+    [self.calendarObject buildCalendarViewInView:self.view];
 
     NSDateComponents *dateComponents = [[NSDateComponents alloc] init];
     [dateComponents setDay:24];
@@ -64,9 +65,6 @@
 - (void) viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
     NSLog(@"self.calBGView.frame: %@", NSStringFromCGRect(self.calBGView.frame));
-    [self.calendarObject buildCalendarViewInView:self.view];
-    
-    NSLog(@"self.calBGView.frame: %@", NSStringFromCGRect(self.calendarObject.monthView.frame));
     
 
 //    if (self.view.frame.size.width < self.view.frame.size.height){

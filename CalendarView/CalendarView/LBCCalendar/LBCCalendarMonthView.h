@@ -10,7 +10,7 @@
 
 @class LBCCalendarObject;
 
-@interface LBCMonthView : UIView
+@interface LBCCalendarMonthView : UIView
 @property (nonatomic, strong) NSArray *dayArray;
 @property (nonatomic, strong) LBCCalendarObject *calendarObject;
 @property (nonatomic, assign) CGFloat size;

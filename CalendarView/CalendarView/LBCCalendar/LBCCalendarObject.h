@@ -80,7 +80,7 @@ typedef NS_ENUM(NSInteger, WeekDay){
 };
 
 
-@class LBCCalendarHeaderView, LBCMonthView;
+@class LBCCalendarView;
 
 
 @interface LBCSelection : NSObject
@@ -94,8 +94,7 @@ typedef NS_ENUM(NSInteger, WeekDay){
 @property (nonatomic, assign) NSInteger firstDayOfLastMonth;
 @property (nonatomic, assign) NSInteger maxDayOfLastMonth;
 @property (nonatomic, assign) NSInteger maxDayOfCurrentMonth;
-@property (nonatomic, strong) LBCMonthView *monthView;
-@property (nonatomic, strong) LBCCalendarHeaderView *headerView;
+@property (nonatomic, strong) IBOutlet LBCCalendarView *calendarView;
 @property (nonatomic, assign) NSInteger currentMonth;
 @property (nonatomic, strong) NSArray * selectionArray;
 

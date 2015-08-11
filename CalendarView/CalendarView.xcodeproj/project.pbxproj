@@ -10,7 +10,11 @@
 		1C514C061B74D31A001216B0 /* LBCCalendarHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C514BFF1B74D31A001216B0 /* LBCCalendarHeaderView.m */; };
 		1C514C071B74D31A001216B0 /* LBCCalendarObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C514C011B74D31A001216B0 /* LBCCalendarObject.m */; };
 		1C514C081B74D31A001216B0 /* LBCDayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C514C031B74D31A001216B0 /* LBCDayView.m */; };
-		1C514C091B74D31A001216B0 /* LBCMonthView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C514C051B74D31A001216B0 /* LBCMonthView.m */; };
+		1C514C091B74D31A001216B0 /* LBCCalendarMonthView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C514C051B74D31A001216B0 /* LBCCalendarMonthView.m */; };
+		1C514C0C1B78CD50001216B0 /* LBCCalendarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C514C0B1B78CD50001216B0 /* LBCCalendarView.m */; };
+		1C514C0E1B78CDA6001216B0 /* LBCCalendarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C514C0D1B78CDA6001216B0 /* LBCCalendarView.xib */; };
+		1C988FA51B7A294400A2E9FD /* LBCCalendarViewControllerConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C988FA41B7A294400A2E9FD /* LBCCalendarViewControllerConstraint.m */; };
+		1C988FA81B7A47E500A2E9FD /* LBCCalendarFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C988FA71B7A47E500A2E9FD /* LBCCalendarFooterView.m */; };
 		1CA9289E1B74B4E900E38A33 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CA9289D1B74B4E900E38A33 /* main.m */; };
 		1CA928A11B74B4E900E38A33 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CA928A01B74B4E900E38A33 /* AppDelegate.m */; };
 		1CA928A41B74B4E900E38A33 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CA928A31B74B4E900E38A33 /* ViewController.m */; };
@@ -38,8 +42,15 @@
 		1C514C011B74D31A001216B0 /* LBCCalendarObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LBCCalendarObject.m; sourceTree = "<group>"; };
 		1C514C021B74D31A001216B0 /* LBCDayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LBCDayView.h; sourceTree = "<group>"; };
 		1C514C031B74D31A001216B0 /* LBCDayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LBCDayView.m; sourceTree = "<group>"; };
-		1C514C041B74D31A001216B0 /* LBCMonthView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LBCMonthView.h; sourceTree = "<group>"; };
-		1C514C051B74D31A001216B0 /* LBCMonthView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LBCMonthView.m; sourceTree = "<group>"; };
+		1C514C041B74D31A001216B0 /* LBCCalendarMonthView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LBCCalendarMonthView.h; sourceTree = "<group>"; };
+		1C514C051B74D31A001216B0 /* LBCCalendarMonthView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LBCCalendarMonthView.m; sourceTree = "<group>"; };
+		1C514C0A1B78CD50001216B0 /* LBCCalendarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LBCCalendarView.h; sourceTree = "<group>"; };
+		1C514C0B1B78CD50001216B0 /* LBCCalendarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LBCCalendarView.m; sourceTree = "<group>"; };
+		1C514C0D1B78CDA6001216B0 /* LBCCalendarView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LBCCalendarView.xib; sourceTree = "<group>"; };
+		1C988FA31B7A294400A2E9FD /* LBCCalendarViewControllerConstraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LBCCalendarViewControllerConstraint.h; sourceTree = "<group>"; };
+		1C988FA41B7A294400A2E9FD /* LBCCalendarViewControllerConstraint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LBCCalendarViewControllerConstraint.m; sourceTree = "<group>"; };
+		1C988FA61B7A47E500A2E9FD /* LBCCalendarFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LBCCalendarFooterView.h; sourceTree = "<group>"; };
+		1C988FA71B7A47E500A2E9FD /* LBCCalendarFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LBCCalendarFooterView.m; sourceTree = "<group>"; };
 		1CA928981B74B4E900E38A33 /* CalendarView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CalendarView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1CA9289C1B74B4E900E38A33 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1CA9289D1B74B4E900E38A33 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -84,8 +95,13 @@
 				1C514C011B74D31A001216B0 /* LBCCalendarObject.m */,
 				1C514C021B74D31A001216B0 /* LBCDayView.h */,
 				1C514C031B74D31A001216B0 /* LBCDayView.m */,
-				1C514C041B74D31A001216B0 /* LBCMonthView.h */,
-				1C514C051B74D31A001216B0 /* LBCMonthView.m */,
+				1C514C041B74D31A001216B0 /* LBCCalendarMonthView.h */,
+				1C514C051B74D31A001216B0 /* LBCCalendarMonthView.m */,
+				1C514C0A1B78CD50001216B0 /* LBCCalendarView.h */,
+				1C514C0D1B78CDA6001216B0 /* LBCCalendarView.xib */,
+				1C514C0B1B78CD50001216B0 /* LBCCalendarView.m */,
+				1C988FA61B7A47E500A2E9FD /* LBCCalendarFooterView.h */,
+				1C988FA71B7A47E500A2E9FD /* LBCCalendarFooterView.m */,
 			);
 			path = LBCCalendar;
 			sourceTree = "<group>";
@@ -111,6 +127,8 @@
 		1CA9289A1B74B4E900E38A33 /* CalendarView */ = {
 			isa = PBXGroup;
 			children = (
+				1C988FA31B7A294400A2E9FD /* LBCCalendarViewControllerConstraint.h */,
+				1C988FA41B7A294400A2E9FD /* LBCCalendarViewControllerConstraint.m */,
 				1C514BFD1B74D31A001216B0 /* LBCCalendar */,
 				1CA928C11B74B51400E38A33 /* LBCCalendarViewController.h */,
 				1CA928C21B74B51400E38A33 /* LBCCalendarViewController.m */,
@@ -232,6 +250,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1C514C0E1B78CDA6001216B0 /* LBCCalendarView.xib in Resources */,
 				1CA928A71B74B4E900E38A33 /* Main.storyboard in Resources */,
 				1CA928AC1B74B4E900E38A33 /* LaunchScreen.xib in Resources */,
 				1CA928A91B74B4E900E38A33 /* Images.xcassets in Resources */,
@@ -255,10 +274,13 @@
 				1CA928C31B74B51400E38A33 /* LBCCalendarViewController.m in Sources */,
 				1C514C081B74D31A001216B0 /* LBCDayView.m in Sources */,
 				1C514C061B74D31A001216B0 /* LBCCalendarHeaderView.m in Sources */,
-				1C514C091B74D31A001216B0 /* LBCMonthView.m in Sources */,
+				1C514C091B74D31A001216B0 /* LBCCalendarMonthView.m in Sources */,
+				1C988FA81B7A47E500A2E9FD /* LBCCalendarFooterView.m in Sources */,
 				1C514C071B74D31A001216B0 /* LBCCalendarObject.m in Sources */,
 				1CA928A41B74B4E900E38A33 /* ViewController.m in Sources */,
 				1CA928A11B74B4E900E38A33 /* AppDelegate.m in Sources */,
+				1C988FA51B7A294400A2E9FD /* LBCCalendarViewControllerConstraint.m in Sources */,
+				1C514C0C1B78CD50001216B0 /* LBCCalendarView.m in Sources */,
 				1CA9289E1B74B4E900E38A33 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

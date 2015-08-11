@@ -6,12 +6,12 @@
 //
 //
 
-#import "LBCMonthView.h"
+#import "LBCCalendarMonthView.h"
 #import "LBCDayView.h"
 #import "LBCCalendarObject.h"
 
 
-@implementation LBCMonthView
+@implementation LBCCalendarMonthView
 
 - (id) initWithCalendarObject:(LBCCalendarObject *)calendarObject andFrame:(CGRect)frame
 {
@@ -31,6 +31,7 @@
     return self;
 }
 
+
 - (void) refreshView{
     
     for (UIView* v in self.subviews){
@@ -38,7 +39,6 @@
     }
     
     NSMutableArray *tmpArray = [[NSMutableArray alloc] init];
-    
     for (int week = 0 ; week < MAX_WEEK_PER_MONTH; week++) {
         for (int weekDay = 0 ; weekDay < MAX_DAY_PER_WEEK; weekDay++) {
             
@@ -73,16 +73,11 @@
             }
             components.day = currentDay;
             
-            CGRect frame = CGRectMake(weekDay * self.size,
-                                      week * self.size,
-                                      self.size,
-                                      self.size);
-            LBCDayView *dayView = [[LBCDayView alloc] initWithComponent:components
-                                                            andDayState:dayState
-                                                               andFrame:frame];
-            dayView.isLastDayInMonth = isLastDayInMonth;
-            [tmpArray addObject:dayView];
-            [self addSubview:dayView];
+            LBCDayView *dayView = (LBCDayView *)[self viewWithTag:monthDay];
+            if (dayView){
+                dayView.isLastDayInMonth = isLastDayInMonth;
+                [tmpArray addObject:dayView];
+            }
         }
     }
     self.dayArray = [NSArray arrayWithArray:tmpArray];

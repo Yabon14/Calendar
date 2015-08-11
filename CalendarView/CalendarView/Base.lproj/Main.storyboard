@@ -1,9 +1,59 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Qbt-fw-fuc">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
+        <!--Calendar View Controller Constraint-->
+        <scene sceneID="8eG-I8-dAt">
+            <objects>
+                <viewController id="Qbt-fw-fuc" customClass="LBCCalendarViewControllerConstraint" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="EV4-uH-z1j"/>
+                        <viewControllerLayoutGuide type="bottom" id="6iD-XR-hIb"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="E27-Gw-VlX">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="43h-Qa-DJ5">
+                                <rect key="frame" x="124" y="126" width="300" height="300"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="300" id="2N2-h7-Q6S"/>
+                                    <constraint firstAttribute="width" constant="300" id="hQZ-dk-Rre"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="43h-Qa-DJ5" secondAttribute="trailing" constant="92" id="OUk-7i-htG"/>
+                            <constraint firstAttribute="centerY" secondItem="43h-Qa-DJ5" secondAttribute="centerY" constant="24" id="RhV-mr-a1d"/>
+                            <constraint firstItem="43h-Qa-DJ5" firstAttribute="top" secondItem="EV4-uH-z1j" secondAttribute="bottom" constant="49" id="W6J-9t-Iik"/>
+                            <constraint firstItem="43h-Qa-DJ5" firstAttribute="leading" secondItem="E27-Gw-VlX" secondAttribute="leadingMargin" constant="77" id="ctg-BD-mJS"/>
+                            <constraint firstItem="6iD-XR-hIb" firstAttribute="top" secondItem="43h-Qa-DJ5" secondAttribute="bottom" constant="103" id="ois-8g-rIi"/>
+                            <constraint firstAttribute="centerX" secondItem="43h-Qa-DJ5" secondAttribute="centerX" constant="26.5" id="tpl-xZ-GKo"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="OUk-7i-htG"/>
+                                <exclude reference="W6J-9t-Iik"/>
+                                <exclude reference="ctg-BD-mJS"/>
+                                <exclude reference="ois-8g-rIi"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <connections>
+                        <outlet property="calView" destination="43h-Qa-DJ5" id="WMr-yM-jkZ"/>
+                        <outlet property="calViewHeight" destination="2N2-h7-Q6S" id="KCX-oO-G77"/>
+                        <outlet property="calViewWidth" destination="hQZ-dk-Rre" id="IDN-Gm-EQV"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7LC-EI-p9W" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="382" y="143"/>
+        </scene>
         <!--Calendar View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
@@ -20,6 +70,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="382" y="816"/>
         </scene>
     </scenes>
 </document>
