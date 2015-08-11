@@ -21,6 +21,7 @@
                                                                         frame.size.width - 2 * buttonSize,
                                                                         buttonSize)];
         self.monthLabel.textAlignment = NSTextAlignmentCenter;
+        self.monthLabel.backgroundColor = [UIColor clearColor];
         self.monthLabel.text = [calendarObject getCurrentMonthName];
         [self addSubview:self.monthLabel];
         
@@ -40,17 +41,28 @@
         [self addSubview:rightArrow];
 #pragma clang diagnostic pop
         
-        NSArray *dayArray = @[@"Lun", @"Mar", @"Mer", @"Jeu", @"Ven", @"Sam", @"Dim"];
+        NSArray *dayArray = @[@"Sa", @"Di", @"Lu", @"Ma", @"Me", @"Je", @"Ve"];
         CGFloat dayXPos = 0.f;
         CGFloat dayWidth = frame.size.width / MAX_DAY_PER_WEEK;
         CGFloat dayHeight = frame.size.height - buttonSize;
+        CGFloat fontSize = 9999.f;;
+        NSMutableArray *labelArray = [[NSMutableArray alloc] init];
         for (int day = 0 ; day < MAX_DAY_PER_WEEK ; day ++) {
             UILabel *dayLabel = [[UILabel alloc] initWithFrame:CGRectMake(dayXPos, buttonSize, dayWidth, dayHeight)];
+            [labelArray addObject:dayLabel];
+            [dayLabel setAdjustsFontSizeToFitWidth:YES];
+            fontSize = fontSize > dayLabel.font.pointSize ? dayLabel.font.pointSize : fontSize;
+            dayLabel.backgroundColor = [UIColor clearColor];
             dayLabel.text = [dayArray objectAtIndex:day];
             dayLabel.textAlignment = NSTextAlignmentCenter;
             [self addSubview:dayLabel];
             dayXPos += dayWidth;
         }
+        for (UILabel *dayLabel in labelArray) {
+            dayLabel.font = [UIFont systemFontOfSize:fontSize];
+        }
+        
+        self.backgroundColor = [UIColor clearColor];
     }
     return self;
 }
