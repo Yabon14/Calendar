@@ -65,10 +65,10 @@
             BOOL leftCurve = NO;
             BOOL rightCurve = NO;
             
-            if (dayView.dateComponents.weekday == 6) {
+            if (dayView.dateComponents.weekday == weekDayFriday) {
                 rightCurve = YES;
             }
-            else if (dayView.dateComponents.weekday == 0) {
+            else if (dayView.dateComponents.weekday == weekDaySaturday) {
                 leftCurve = YES;
             }
             if (dayView.dateComponents.day == 1) {
@@ -120,7 +120,7 @@
     
     NSDate *firstDayToShow = [calendar dateFromComponents:components];
     NSDateComponents *newComponents = [calendar components: NSCalendarUnitWeekday | NSCalendarUnitDay fromDate:firstDayToShow];
-    while (newComponents.weekday != 2) {
+    while (newComponents.weekday != weekDaySaturday) {
         NSDateComponents *comps = [NSDateComponents new];
         comps.day   = -1;
         firstDayToShow = [calendar dateByAddingComponents:comps toDate:firstDayToShow options:0];
@@ -145,34 +145,62 @@
 
 
 
--(UIView *) buildCalendarViewInFrame:(CGRect) frame{
-
+- (void) buildCalendarViewInView:(UIView *)view{
     [self configureCalendar];
     
-    CGFloat width = frame.size.width / MAX_DAY_PER_WEEK;
-    CGFloat height = frame.size.height / MAX_WEEK_PER_MONTH;
+    CGFloat width = view.frame.size.width / MAX_DAY_PER_WEEK;
+    CGFloat height = view.frame.size.height / MAX_WEEK_PER_MONTH;
     CGFloat size = height < width ? height : width;
-
-    self.calendarView = [[UIView alloc] initWithFrame:frame];
 
     self.monthView = [[LBCMonthView alloc] initWithCalendarObject:self
                                                          andFrame:CGRectMake(0,
                                                                     size,
-                                                                    frame.size.width,
-                                                                    frame.size.height - size)];
+                                                                    view.frame.size.width,
+                                                                    view.frame.size.height - size)];
     [self.monthView refreshView];
-    [self.calendarView addSubview:self.monthView];
+    [view addSubview:self.monthView];
     
-    CGFloat calendarWidth = (self.monthView.center.x - self.monthView.xPosition) * 2.f;
-    self.headerView = [[LBCCalendarHeaderView alloc] initWithFrame:CGRectMake(self.monthView.xPosition,
-                                                                              self.monthView.frame.origin.y + self.monthView.yPosition - size,
-                                                                              calendarWidth,
+    self.headerView = [[LBCCalendarHeaderView alloc] initWithFrame:CGRectMake(self.monthView.frame.origin.x,
+                                                                              self.monthView.frame.origin.y - size,
+                                                                              self.monthView.frame.size.width,
                                                                               size)
                                                  andCalendarObject:self];
-    [self.calendarView addSubview:self.headerView];
-    [self addSelectionForCurrentMonth];
+    [view addSubview:self.headerView];
+    
+//    
+//    [NSLayoutConstraint constraintWithItem:self.monthView
+//                                 attribute:NSLayoutAttributeLeading
+//                                 relatedBy:NSLayoutRelationEqual
+//                                    toItem:self.calendarView
+//                                 attribute:NSLayoutAttributeLeft
+//                                multiplier:1
+//                                  constant:0];
+//    
+//    [NSLayoutConstraint constraintWithItem:self.monthView
+//                                 attribute:NSLayoutAttributeTop
+//                                 relatedBy:NSLayoutRelationEqual
+//                                    toItem:self.calendarView
+//                                 attribute:NSLayoutAttributeTop
+//                                multiplier:1
+//                                  constant:self.monthView.frame.origin.y];
+//
+//    [NSLayoutConstraint constraintWithItem:self.monthView
+//                                 attribute:NSLayoutAttributeBottom
+//                                 relatedBy:NSLayoutRelationEqual
+//                                    toItem:self.calendarView
+//                                 attribute:NSLayoutAttributeBottom
+//                                multiplier:1
+//                                  constant:self.calendarView.frame.size.height - self.monthView.frame.origin.y - self.monthView.frame.size.height];
+//
+//    [NSLayoutConstraint constraintWithItem:self.monthView
+//                                 attribute:NSLayoutAttributeTrailing
+//                                 relatedBy:NSLayoutRelationEqual
+//                                    toItem:self.calendarView
+//                                 attribute:NSLayoutAttributeRight
+//                                multiplier:1
+//                                  constant:0];
 
-    return self.calendarView;
+    [self addSelectionForCurrentMonth];
 }
 
 
@@ -211,22 +239,19 @@
 
 - (void) orientationChanged:(CGRect)notification {
     
-    UIView *superView = self.calendarView.superview;
-    CGRect newFrame = superView.frame;
-    [self updateCalendarFrame:newFrame];
+    UIView *superView = self.monthView.superview;
+    [self updateCalendarView:superView];
 }
 
 
-
-- (void) updateCalendarFrame:(CGRect)newFrame{
-    UIView *superView = self.calendarView.superview;
-    [self.calendarView removeFromSuperview];
-    self.calendarView = nil;
+- (void) updateCalendarView:(UIView *)newView{
+    [self.monthView removeFromSuperview];
+    [self.headerView removeFromSuperview];
     self.monthView = nil;
     self.headerView = nil;
-    
-    [superView addSubview:[self buildCalendarViewInFrame:newFrame]];
+    [self buildCalendarViewInView:newView];
 }
+
 
 @end
 
