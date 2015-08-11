@@ -132,14 +132,14 @@
 
 
 
-- (NSString *)getCurrentMonthName{
+- (NSString *)getCurrentMonthYearName{
     NSDateComponents *dateComponents = [[NSDateComponents alloc] init];
     [dateComponents setMonth:self.currentMonth];
     NSDate *dateForCurrentMonth = [[NSCalendar currentCalendar] dateByAddingComponents:dateComponents toDate:[NSDate date] options:0];
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"MMMM"];
+    [formatter setDateFormat:@"MMMM YYYY"];
     NSString *stringFromDate = [formatter stringFromDate:dateForCurrentMonth];
-    return stringFromDate;
+    return [stringFromDate capitalizedString];
 }
 
 
@@ -232,7 +232,7 @@
     [self configureCalendar];
     [self.monthView refreshView];
     [self addSelectionForCurrentMonth];
-    self.headerView.monthLabel.text = [self getCurrentMonthName];
+    self.headerView.monthLabel.text = [self getCurrentMonthYearName];
 }
 
 

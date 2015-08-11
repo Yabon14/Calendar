@@ -23,6 +23,10 @@
         self.dayLabel.textAlignment = NSTextAlignmentCenter;
         self.dayLabel.backgroundColor = [UIColor clearColor];
         self.dayLabel.text = labelText;
+
+        self.dayLabel.textColor = C8;
+        self.dayLabel.highlightedTextColor = C6;
+        
         [self addSubview:self.dayLabel];
         self.backgroundColor = [UIColor clearColor];
         
@@ -128,6 +132,7 @@
         maskLayer.path = maskPath.CGPath;
         self.layer.mask = maskLayer;
         self.backgroundColor = [UIColor orangeColor];
+        self.dayLabel.highlighted = YES;
     }
     
 }

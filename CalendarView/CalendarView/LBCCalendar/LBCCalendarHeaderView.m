@@ -22,20 +22,20 @@
                                                                         buttonSize)];
         self.monthLabel.textAlignment = NSTextAlignmentCenter;
         self.monthLabel.backgroundColor = [UIColor clearColor];
-        self.monthLabel.text = [calendarObject getCurrentMonthName];
+        self.monthLabel.text = [calendarObject getCurrentMonthYearName];
         [self addSubview:self.monthLabel];
         
         
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wundeclared-selector"
         UIButton *leftArrow = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, buttonSize, buttonSize)];
-        leftArrow.backgroundColor = [UIColor redColor];
+        [leftArrow setImage:[UIImage imageNamed:@"left_arrow"] forState:UIControlStateNormal];
         leftArrow.tag = LEFT_ARROW_TAG;
         [leftArrow addTarget:calendarObject action:@selector(buttonPressed:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:leftArrow];
         
         UIButton *rightArrow = [[UIButton alloc] initWithFrame:CGRectMake(frame.size.width - buttonSize, 0, buttonSize, buttonSize)];
-        rightArrow.backgroundColor = [UIColor redColor];
+        [rightArrow setImage:[UIImage imageNamed:@"right_arrow"] forState:UIControlStateNormal];
         rightArrow.tag = RIGHT_ARROW_TAG;
         [rightArrow addTarget:calendarObject action:@selector(buttonPressed:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:rightArrow];
