@@ -66,7 +66,7 @@
                                 </mask>
                             </variation>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="500" verticalHuggingPriority="500" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3d5-4U-imT">
+                        <button opaque="NO" contentMode="center" horizontalHuggingPriority="500" verticalHuggingPriority="500" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3d5-4U-imT">
                             <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                             <constraints>
                                 <constraint firstAttribute="width" secondItem="3d5-4U-imT" secondAttribute="height" multiplier="1:1" id="4wd-ju-wYn"/>
@@ -845,6 +845,11 @@
                         <constraint firstItem="vsc-NA-MGx" firstAttribute="leading" secondItem="Yw8-pc-FAW" secondAttribute="leading" id="zaK-aX-dvV"/>
                         <constraint firstItem="WDN-X5-WOa" firstAttribute="height" secondItem="4jn-NJ-gCf" secondAttribute="height" id="zeO-PA-NTD"/>
                     </constraints>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="9TU-hE-tyn"/>
+                        </mask>
+                    </variation>
                 </view>
                 <view tag="1002" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mzu-tP-H2k" customClass="LBCCalendarFooterView">
                     <rect key="frame" x="0.0" y="375" width="350" height="100"/>
@@ -860,6 +865,7 @@
                 <constraint firstAttribute="trailing" secondItem="MFO-hq-91V" secondAttribute="trailing" id="5WF-5A-XXc"/>
                 <constraint firstItem="mzu-tP-H2k" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="HQ9-ke-vOy"/>
                 <constraint firstItem="MFO-hq-91V" firstAttribute="width" secondItem="Yw8-pc-FAW" secondAttribute="width" id="MTR-q4-Cfl"/>
+                <constraint firstItem="Yw8-pc-FAW" firstAttribute="top" secondItem="MFO-hq-91V" secondAttribute="bottom" id="PAD-Yn-hdN"/>
                 <constraint firstAttribute="trailing" secondItem="mzu-tP-H2k" secondAttribute="trailing" id="QBs-pg-FHG"/>
                 <constraint firstItem="Yw8-pc-FAW" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Z5a-Xa-cxu"/>
                 <constraint firstItem="Yw8-pc-FAW" firstAttribute="width" secondItem="mzu-tP-H2k" secondAttribute="width" id="gEl-4F-jN1"/>
