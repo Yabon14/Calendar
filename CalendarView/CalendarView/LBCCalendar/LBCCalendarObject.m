@@ -11,6 +11,7 @@
 #import "LBCCalendarMonthView.h"
 #import "LBCCalendarHeaderView.h"
 #import "LBCCalendarView.h"
+#import "LBCCalendarFooterView.h"
 
 @implementation LBCSelection
 
@@ -153,6 +154,35 @@
     [self.calendarView.headerView refreshWithCalendarObject:self];
     
     [self addSelectionForCurrentMonth];
+    
+    
+    [self.calendarView setTranslatesAutoresizingMaskIntoConstraints:NO];
+    [view addConstraint:[NSLayoutConstraint constraintWithItem:self.calendarView
+                                                                  attribute:NSLayoutAttributeLeading
+                                                                  relatedBy:NSLayoutRelationEqual
+                                                                     toItem:view
+                                                                  attribute:NSLayoutAttributeLeft
+                                                                 multiplier:1
+                                                                   constant:0]];
+    
+    [view addConstraint:[NSLayoutConstraint constraintWithItem:self.calendarView
+                                                                  attribute:NSLayoutAttributeTrailing
+                                                                  relatedBy:NSLayoutRelationEqual
+                                                                     toItem:view
+                                                                  attribute:NSLayoutAttributeRight
+                                                                 multiplier:1
+                                                                   constant:0]];
+    
+    [view addConstraint:[NSLayoutConstraint constraintWithItem:self.calendarView
+                                                     attribute:NSLayoutAttributeTop
+                                                     relatedBy:NSLayoutRelationEqual
+                                                        toItem:view
+                                                     attribute:NSLayoutAttributeTop
+                                                    multiplier:1
+                                                      constant:0]];
+    
+
+    [view updateConstraints];
 }
 
 
