@@ -23,8 +23,9 @@
     LBCCalendarObject *co = [[LBCCalendarObject alloc] init];
     [co buildCalendarViewInView:self.calView];
     
-    UITapGestureRecognizer *tg = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(action)];
-    [self.view addGestureRecognizer:tg];
+    
+//    UITapGestureRecognizer *tg = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(action)];
+//    [self.view addGestureRecognizer:tg];
 
 //    [self.calendarView addHeightConstraint];
 //    self.calView.clipsToBounds = YES;
@@ -55,16 +56,25 @@
 
 
 - (void) viewDidAppear:(BOOL)animated{
-    [super viewDidAppear:animated];
     
+    [super viewDidAppear:animated];
+
+    UIView *v = [[UIView alloc] initWithFrame:self.calView.frame];
+    [self.view addSubview:v];
+    v.alpha = 0.5f;
+    v.backgroundColor = [UIColor redColor];
+    
+    LBCCalendarObject *co = [[LBCCalendarObject alloc] init];
+    [co buildCalendarViewInView:self.calView];
+
     [self displayFromOfSubviewInView:self.view];
 }
 
 
 - (void) displayFromOfSubviewInView:(UIView *)view{
     for (UIView * v in view.subviews) {
+        NSLog(@"Tag: %lu   and frame: %@ ", (long)v.tag, NSStringFromCGRect(v.frame));
         [self displayFromOfSubviewInView:v];
-        NSLog(@"Tag: %d   and frame: %@ ", v.tag, NSStringFromCGRect(v.frame));
     }
 }
 

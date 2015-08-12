@@ -13,30 +13,26 @@
 
 @implementation LBCCalendarMonthView
 
-- (id) initWithCalendarObject:(LBCCalendarObject *)calendarObject andFrame:(CGRect)frame
-{
-    CGFloat width = frame.size.width / MAX_DAY_PER_WEEK;
-    CGFloat height = frame.size.height / MAX_WEEK_PER_MONTH;
-    CGFloat size = height < width ? height : width;
-    CGFloat xPosition = frame.size.width * 0.5f - size * MAX_DAY_PER_WEEK * 0.5f;
-    CGFloat yPosition = frame.size.height * 0.5f - size * MAX_WEEK_PER_MONTH * 0.5f;
-    
-    self = [super initWithFrame:CGRectMake(xPosition, yPosition, size * MAX_DAY_PER_WEEK, size * MAX_WEEK_PER_MONTH)];
-    if (self){
-        NSLog(@"month frame: %@", NSStringFromCGRect(self.frame));
-        self.backgroundColor = [UIColor clearColor];
-        self.calendarObject = calendarObject;
-        self.size = size;
-    }
-    return self;
-}
+//- (id) initWithCalendarObject:(LBCCalendarObject *)calendarObject andFrame:(CGRect)frame
+//{
+//    CGFloat width = frame.size.width / MAX_DAY_PER_WEEK;
+//    CGFloat height = frame.size.height / MAX_WEEK_PER_MONTH;
+//    CGFloat size = height < width ? height : width;
+//    CGFloat xPosition = frame.size.width * 0.5f - size * MAX_DAY_PER_WEEK * 0.5f;
+//    CGFloat yPosition = frame.size.height * 0.5f - size * MAX_WEEK_PER_MONTH * 0.5f;
+//    
+//    self = [super initWithFrame:CGRectMake(xPosition, yPosition, size * MAX_DAY_PER_WEEK, size * MAX_WEEK_PER_MONTH)];
+//    if (self){
+//        NSLog(@"month frame: %@", NSStringFromCGRect(self.frame));
+//        self.backgroundColor = [UIColor clearColor];
+//        self.calendarObject = calendarObject;
+//        self.size = size;
+//    }
+//    return self;
+//}
 
 
 - (void) refreshView{
-    
-    for (UIView* v in self.subviews){
-        [v removeFromSuperview];
-    }
     
     NSMutableArray *tmpArray = [[NSMutableArray alloc] init];
     for (int week = 0 ; week < MAX_WEEK_PER_MONTH; week++) {
@@ -75,6 +71,7 @@
             
             LBCDayView *dayView = (LBCDayView *)[self viewWithTag:monthDay];
             if (dayView){
+                [dayView refreshWithComponent:components andDayState:dayState];
                 dayView.isLastDayInMonth = isLastDayInMonth;
                 [tmpArray addObject:dayView];
             }

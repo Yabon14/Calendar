@@ -11,29 +11,19 @@
 
 @implementation LBCDayView
 
-- (id) initWithComponent:(NSDateComponents *)component
-             andDayState:(DayState)state
-                andFrame:(CGRect)frame{
+- (void) refreshWithComponent:(NSDateComponents *)component
+                  andDayState:(DayState)state{
     
-    self = [super initWithFrame:frame];
-    if (self){
-        self.dateComponents = component;
-        NSString *labelText = [NSString stringWithFormat:@"%lu", (long)component.day];
-        self.dayLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
-        self.dayLabel.textAlignment = NSTextAlignmentCenter;
-        self.dayLabel.backgroundColor = [UIColor clearColor];
-        self.dayLabel.text = labelText;
-
-        self.dayLabel.textColor = C8;
-        self.dayLabel.highlightedTextColor = C6;
-        
-        [self addSubview:self.dayLabel];
-        self.backgroundColor = [UIColor clearColor];
-        
-        _dayState = dayStateUnselected;
-        self.dayState = state;
-    }
-    return self;
+    self.dateComponents = component;
+    NSString *labelText = [NSString stringWithFormat:@"%lu", (long)component.day];
+    self.textAlignment = NSTextAlignmentCenter;
+    self.backgroundColor = [UIColor clearColor];
+    self.text = labelText;
+    self.textColor = C8;
+    self.highlightedTextColor = C6;
+    
+    _dayState = dayStateUnselected;
+    self.dayState = state;
 }
 
 
@@ -83,7 +73,7 @@
     CGFloat radiusSize = RADIUS_CELL_COEFF * self.frame.size.height;
     switch (state) {
             case dayStateUnactive:
-                self.dayLabel.textColor = [UIColor clearColor];
+                self.textColor = [UIColor clearColor];
                 break;
 
             case dayStateUnselected:
@@ -132,7 +122,10 @@
         maskLayer.path = maskPath.CGPath;
         self.layer.mask = maskLayer;
         self.backgroundColor = [UIColor orangeColor];
-        self.dayLabel.highlighted = YES;
+        self.highlighted = YES;
+    }
+    else{
+        self.highlighted = NO;
     }
     
 }

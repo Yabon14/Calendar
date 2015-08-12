@@ -38,8 +38,6 @@
 
 
 -(void) dealloc{
-    [[NSNotificationCenter defaultCenter] removeObserver: self];
-    [[UIDevice currentDevice] endGeneratingDeviceOrientationNotifications];
 }
 
 
@@ -152,6 +150,7 @@
 
     self.calendarView.monthView.calendarObject = self;
     [self.calendarView.monthView refreshView];
+    [self.calendarView.headerView refreshWithCalendarObject:self];
     
     [self addSelectionForCurrentMonth];
 }
@@ -173,7 +172,7 @@
 }
 
 
-- (void) buttonPressed:(id)sender{
+- (IBAction) buttonPressed:(id)sender{
     UIButton *b = (UIButton *)sender;
     if (b.tag == RIGHT_ARROW_TAG){
         self.currentMonth++;
