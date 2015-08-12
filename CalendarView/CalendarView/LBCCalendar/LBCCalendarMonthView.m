@@ -32,7 +32,10 @@
 //}
 
 
-- (void) refreshView{
+- (void) refreshWithCalendarObject:(LBCCalendarObject *)calendarObject{
+    
+    if (!self.calendarObject)
+        self.calendarObject = calendarObject;
     
     NSMutableArray *tmpArray = [[NSMutableArray alloc] init];
     for (int week = 0 ; week < MAX_WEEK_PER_MONTH; week++) {

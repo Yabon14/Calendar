@@ -660,7 +660,7 @@
                             </variation>
                         </view>
                     </subviews>
-                    <color key="backgroundColor" red="0.0" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstItem="Pr3-xJ-LaN" firstAttribute="top" secondItem="PUg-w3-GnW" secondAttribute="bottom" id="01v-mx-JxW"/>
                         <constraint firstItem="uKr-SG-suD" firstAttribute="top" secondItem="Pjc-n1-xPf" secondAttribute="bottom" id="0Ft-Tk-SSG"/>

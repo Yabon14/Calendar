@@ -22,6 +22,10 @@
     self.textColor = C8;
     self.highlightedTextColor = C6;
     
+    self.font = [UIFont systemFontOfSize:200];
+    [self setAdjustsFontSizeToFitWidth:YES];
+    self.font = [UIFont systemFontOfSize:(int)(self.font.pointSize * 0.7f)];
+    
     _dayState = dayStateUnselected;
     self.dayState = state;
 }

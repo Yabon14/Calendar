@@ -15,8 +15,7 @@
 @property (nonatomic, strong) LBCCalendarObject *calendarObject;
 @property (nonatomic, assign) CGFloat size;
 
-//- (id) initWithCalendarObject:(LBCCalendarObject *)calendarObject andFrame:(CGRect)frame;
-- (void) refreshView;
+- (void) refreshWithCalendarObject:(LBCCalendarObject *)calendarObject;
 
 @end
 

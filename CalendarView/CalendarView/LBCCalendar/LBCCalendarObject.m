@@ -54,7 +54,6 @@
     
     
     for (LBCDayView *dayView in self.calendarView.monthView.dayArray) {
-//        NSLog(@"%lu, %lu", (long)dayView.dateComponents.month, (long)dayView.dateComponents.day);
         
         if (([[dayView dateForDayView] compare:startDate] == NSOrderedDescending && [[dayView dateForDayView] compare:endDate] == NSOrderedAscending)
             || [[dayView dateForDayView] compare:startDate] == NSOrderedSame
@@ -149,8 +148,7 @@
     self.calendarView = [[[NSBundle mainBundle] loadNibNamed:@"LBCCalendarView" owner:nil options:nil] objectAtIndex:0];
     [view addSubview:self.calendarView];
 
-    self.calendarView.monthView.calendarObject = self;
-    [self.calendarView.monthView refreshView];
+    [self.calendarView.monthView refreshWithCalendarObject:self];
     [self.calendarView.headerView refreshWithCalendarObject:self];
     
     [self addSelectionForCurrentMonth];
@@ -198,6 +196,7 @@
         
     for (LBCSelection *selection in self.selectionArray) {
         [self addSelectionFromDate:selection.startDate toDate:selection.endDate];
+//        [self.calendarView.footerView addSlectionFromDate:selection.startDate toDate:selection.endDate];
     }
 }
 
@@ -212,7 +211,7 @@
     }
     
     [self configureCalendar];
-    [self.calendarView.monthView refreshView];
+    [self.calendarView.monthView refreshWithCalendarObject:self];
     [self addSelectionForCurrentMonth];
     self.calendarView.headerView.monthLabel.text = [self getCurrentMonthYearName];
 }
