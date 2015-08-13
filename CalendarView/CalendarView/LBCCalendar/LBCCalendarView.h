@@ -16,10 +16,8 @@
 @interface LBCCalendarView : UIView
 
 
-@property (nonatomic, strong) IBOutlet LBCCalendarMonthView *monthView;
-@property (nonatomic, strong) IBOutlet LBCCalendarHeaderView *headerView;
-@property (nonatomic, strong) IBOutlet LBCCalendarFooterView *footerView;
+@property (nonatomic, weak) IBOutlet LBCCalendarMonthView *monthView;
+@property (nonatomic, weak) IBOutlet LBCCalendarHeaderView *headerView;
+@property (nonatomic, weak) IBOutlet LBCCalendarFooterView *footerView;
 
-@property (nonatomic, weak) IBOutlet NSLayoutConstraint *footerHeight;
-- (CGFloat) getNewFrameHeight;
 @end

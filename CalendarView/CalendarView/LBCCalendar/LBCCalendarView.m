@@ -13,18 +13,5 @@
 
 
 
-- (CGFloat) getNewFrameHeight {
-    
-//    CGFloat oldFooterHeight = self.footerHeight.constant;
-  
-    
-    self.footerHeight.constant = 200.f;
-    
-//    CGFloat totalHeight = self.frame.size.height - oldFooterHeight + self.footerHeight.constant;
-    return self.frame.size.height;
-}
-
-
-
 
 @end
