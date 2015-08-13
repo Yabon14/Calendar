@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LBCCalendarFooterView : UIView
-
+@interface LBCCalendarFooterView : UITableView
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint *footerHeight;
 @end
