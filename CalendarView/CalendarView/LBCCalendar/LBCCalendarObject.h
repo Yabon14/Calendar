@@ -92,7 +92,8 @@ typedef NS_ENUM(NSInteger, WeekDay){
 @interface LBCSelection : NSObject
 @property (nonatomic, strong) NSDate *startDate;
 @property (nonatomic, strong) NSDate *endDate;
-- (id) initWithStartDate:(NSDate *)startDate andEndDate:(NSDate *)endDate;
+@property (nonatomic, assign) NSInteger price;
+- (id) initWithStartDate:(NSDate *)startDate andEndDate:(NSDate *)endDate andPrice:(NSInteger)price;
 @end
 
 

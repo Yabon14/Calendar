@@ -15,11 +15,12 @@
 
 @implementation LBCSelection
 
-- (id) initWithStartDate:(NSDate *)startDate andEndDate:(NSDate *)endDate{
+- (id) initWithStartDate:(NSDate *)startDate andEndDate:(NSDate *)endDate andPrice:(NSInteger)price{
     self = [super init];
     if (self){
         self.startDate = startDate;
         self.endDate = endDate;
+        self.price = price;
     }
     return self;
 }
@@ -360,6 +361,7 @@
         cell.backgroundColor = [UIColor clearColor];
         cell.textLabel.numberOfLines = 0;
         cell.textLabel.lineBreakMode = NSLineBreakByWordWrapping;
+        [cell setSeparatorInset:UIEdgeInsetsZero];
     }
     
     LBCSelection *selection = [self.selectionCurrentMonthArray objectAtIndex:indexPath.row];
@@ -367,9 +369,18 @@
     [formatter setDateFormat:@"dd MMMM YYYY"];
     NSString *startDate = [formatter stringFromDate:selection.startDate];
     NSString *endDate = [formatter stringFromDate:selection.endDate];
+
+
+    NSString *priceString = [NSString stringWithFormat:@"%lu €", selection.price];
+    NSString *completeString = [NSString stringWithFormat:@"Du %@ au %@ : %@", startDate, endDate, priceString];
+    NSRange priceRange = [completeString rangeOfString:priceString];
     
-    cell.textLabel.text = [NSString stringWithFormat:@"Du %@ au %@ : ", startDate, endDate];
-    
+    NSMutableAttributedString* attributedString = [[NSMutableAttributedString alloc] initWithString:completeString];
+    [attributedString addAttribute:NSForegroundColorAttributeName
+                             value:[UIColor orangeColor]
+                             range:priceRange];
+
+    cell.textLabel.attributedText = attributedString;
     return cell;
 }
 
