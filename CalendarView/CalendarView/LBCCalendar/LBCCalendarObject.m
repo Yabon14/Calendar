@@ -42,8 +42,9 @@
 }
 
 
-- (void) addSelectionFromDate:(NSDate *)startDate toDate:(NSDate *)endDate{
+- (BOOL) addSelectionFromDate:(NSDate *)startDate toDate:(NSDate *)endDate{
     
+    BOOL selectionInCurrentMonth = NO;
     NSCalendar *calendar = [NSCalendar currentCalendar];
     
     NSDateComponents *components = [calendar components: NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay fromDate:startDate];
@@ -52,13 +53,15 @@
     components = [calendar components: NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay fromDate:endDate];
     endDate = [calendar dateFromComponents:components];
     
-    
+
     for (LBCDayView *dayView in self.calendarView.monthView.dayArray) {
         
-        if (([[dayView dateForDayView] compare:startDate] == NSOrderedDescending && [[dayView dateForDayView] compare:endDate] == NSOrderedAscending)
+        if (dayView.dayState != dayStateUnactive &&
+            (([[dayView dateForDayView] compare:startDate] == NSOrderedDescending && [[dayView dateForDayView] compare:endDate] == NSOrderedAscending)
             || [[dayView dateForDayView] compare:startDate] == NSOrderedSame
-            || [[dayView dateForDayView] compare:endDate] == NSOrderedSame)
+            || [[dayView dateForDayView] compare:endDate] == NSOrderedSame))
         {
+            selectionInCurrentMonth = YES;
             BOOL leftCurve = NO;
             BOOL rightCurve = NO;
             
@@ -95,6 +98,8 @@
             }
         }
     }
+    
+    return selectionInCurrentMonth;
 }
 
 
