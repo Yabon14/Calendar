@@ -33,6 +33,8 @@
     self = [super init];
     if (self){
         self.currentMonth = 0;
+        self.dateMin = [NSDate date];
+        self.dateMax = [NSDate date];
     }
     return self;
 }
@@ -108,12 +110,12 @@
     
     NSDateComponents *dateComponents = [[NSDateComponents alloc] init];
     [dateComponents setMonth:self.currentMonth];
-    NSDate *dateForCurrentMonth = [calendar dateByAddingComponents:dateComponents toDate:[NSDate date] options:0];
+    NSDate *dateForCurrentMonth = [calendar dateByAddingComponents:dateComponents toDate:self.dateMin options:0];
     NSRange rng = [calendar rangeOfUnit:NSCalendarUnitDay inUnit:NSCalendarUnitMonth forDate:dateForCurrentMonth];
     self.maxDayOfCurrentMonth = rng.length;
     
     [dateComponents setMonth:self.currentMonth - 1];
-    NSDate *dateForPreviousMonth = [calendar dateByAddingComponents:dateComponents toDate:[NSDate date] options:0];
+    NSDate *dateForPreviousMonth = [calendar dateByAddingComponents:dateComponents toDate:self.dateMin options:0];
     rng = [calendar rangeOfUnit:NSCalendarUnitDay inUnit:NSCalendarUnitMonth forDate:dateForPreviousMonth];
     self.maxDayOfLastMonth = rng.length;
     
@@ -137,7 +139,7 @@
 - (NSString *)getCurrentMonthYearName{
     NSDateComponents *dateComponents = [[NSDateComponents alloc] init];
     [dateComponents setMonth:self.currentMonth];
-    NSDate *dateForCurrentMonth = [[NSCalendar currentCalendar] dateByAddingComponents:dateComponents toDate:[NSDate date] options:0];
+    NSDate *dateForCurrentMonth = [[NSCalendar currentCalendar] dateByAddingComponents:dateComponents toDate:self.dateMin options:0];
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"MMMM YYYY"];
     NSString *stringFromDate = [formatter stringFromDate:dateForCurrentMonth];
@@ -147,8 +149,10 @@
 
 
 
-- (void) buildCalendarViewInView:(UIView *)view withDelegate:(id)delegate{
+- (void) buildCalendarViewInView:(UIView *)view withDelegate:(id)delegate andSelectionArray:(NSArray *)selectionArray{
     self.delegate = delegate;
+    
+    [self addSelectionArray:selectionArray];
     [self configureCalendar];
     
     self.calendarView = [[[NSBundle mainBundle] loadNibNamed:@"LBCCalendarView" owner:nil options:nil] objectAtIndex:0];
@@ -156,10 +160,6 @@
     self.calendarView.footerView.dataSource = self;
     [view addSubview:self.calendarView];
 
-    [self.calendarView.monthView refreshWithCalendarObject:self];
-    [self.calendarView.headerView refreshWithCalendarObject:self];
-    
-    
     
     [self.calendarView setTranslatesAutoresizingMaskIntoConstraints:NO];
     [self.calendarView.footerView setTranslatesAutoresizingMaskIntoConstraints:NO];
@@ -192,14 +192,32 @@
     [view updateConstraints];
     
     
-    [self addSelectionForCurrentMonth];
+    [self.calendarView.monthView refreshWithCalendarObject:self];
+    [self.calendarView.headerView refreshWithCalendarObject:self];
+    [self performSelector:@selector(addSelectionForCurrentMonth) withObject:nil afterDelay:0.f];
 }
+
+
 
 
 - (void) addSelectionArray:(NSArray *)selectionArray{
     self.selectionArray = selectionArray;
-    [self addSelectionForCurrentMonth];
+    
+    LBCSelection *firstSelection = [self.selectionArray objectAtIndex:0];
+    self.dateMin = firstSelection.startDate;
+    self.dateMax = firstSelection.endDate;
+    
+    for (LBCSelection *selection in self.selectionArray) {
+        if ([self.dateMin compare:selection.startDate] == NSOrderedDescending) {
+            self.dateMin = selection.startDate;
+        }
+        if ([self.dateMax compare:selection.endDate] == NSOrderedAscending) {
+            self.dateMax = selection.endDate;
+        }
+    }
 }
+
+
 
 
 - (void) addSelectionForCurrentMonth{
@@ -217,9 +235,6 @@
     
     CGFloat newFooterHeight = [self.selectionCurrentMonthArray count] * 44.f;
     self.calendarView.footerView.footerHeight.constant = newFooterHeight;
-    self.calendarView.footerView.backgroundColor = [UIColor clearColor];
-    self.calendarView.backgroundColor = [UIColor yellowColor];
-    self.calendarView.monthView.backgroundColor = [UIColor greenColor];
     [self.calendarView.footerView reloadData];
     
     [self.calendarView updateConstraints];
@@ -241,13 +256,39 @@
     UIButton *b = (UIButton *)sender;
     NSInteger monthDirection = 1;
     
+    BOOL updateMonth = NO;
+    
     if (b.tag == RIGHT_ARROW_TAG){
-        self.currentMonth++;
+        
+        NSCalendar *calendar = [NSCalendar currentCalendar];
+        NSDateComponents *dateComponents = [[NSDateComponents alloc] init];
+        
+        [dateComponents setMonth:(self.currentMonth + 1)];
+        NSDate *dateForNextMonth = [calendar dateByAddingComponents:dateComponents toDate:self.dateMin options:0];
+        NSDateComponents *newComponents = [calendar components:NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay fromDate:dateForNextMonth];
+        [newComponents setDay:1];
+        NSDate *firstDayOfNextMonth = [calendar dateFromComponents:newComponents];
+        
+        if ([firstDayOfNextMonth compare:self.dateMax] != NSOrderedDescending){
+            self.currentMonth++;
+            updateMonth = YES;
+        }
     }
     else if (b.tag == LEFT_ARROW_TAG){
-        self.currentMonth--;
-        monthDirection = -1;
+        
+        if (self.currentMonth > 0){
+            self.currentMonth--;
+            monthDirection = -1;
+            updateMonth = YES;
+        }
     }
+    
+    
+    if (!updateMonth)
+        return;
+    
+    
+    
     
     [self configureCalendar];
 
@@ -267,6 +308,7 @@
     [self.calendarView addSubview:currentMonth];
     [self.calendarView addSubview:nextMonth];
     
+    self.calendarView.monthView.hidden = YES;
     [UIView animateWithDuration:0.5f
                      animations:^{
                          
@@ -281,6 +323,7 @@
                      } completion:^(BOOL finished) {
                          [currentMonth removeFromSuperview];
                          [nextMonth removeFromSuperview];
+                         self.calendarView.monthView.hidden = NO;
                      }];
     
 

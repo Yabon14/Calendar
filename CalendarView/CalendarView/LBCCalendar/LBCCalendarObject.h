@@ -101,7 +101,11 @@ typedef NS_ENUM(NSInteger, WeekDay){
 @property (nonatomic, assign) NSInteger maxDayOfLastMonth;
 @property (nonatomic, assign) NSInteger maxDayOfCurrentMonth;
 @property (nonatomic, strong) LBCCalendarView *calendarView;
+
 @property (nonatomic, assign) NSInteger currentMonth;
+@property (nonatomic, strong) NSDate *dateMin;
+@property (nonatomic, strong) NSDate *dateMax;
+
 @property (nonatomic, strong) NSArray * selectionArray;
 @property (nonatomic, strong) NSArray * selectionCurrentMonthArray;
 
@@ -127,7 +131,7 @@ typedef NS_ENUM(NSInteger, WeekDay){
 - (BOOL) addSelectionFromDate:(NSDate *)startDate toDate:(NSDate *)endDate;
 
 
-- (void) buildCalendarViewInView:(UIView *)view withDelegate:(id)delegate;
+- (void) buildCalendarViewInView:(UIView *)view withDelegate:(id)delegate andSelectionArray:(NSArray *)selectionArray;
 
 
 //- (void) updateCalendarView:(UIView *)newView;
