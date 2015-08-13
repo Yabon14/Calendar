@@ -195,7 +195,32 @@
     
     [self.calendarView.monthView refreshWithCalendarObject:self];
     [self.calendarView.headerView refreshWithCalendarObject:self];
+    
+    UISwipeGestureRecognizer *leftSwipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeIsDone:)];
+    leftSwipe.direction = UISwipeGestureRecognizerDirectionRight;
+    
+    UISwipeGestureRecognizer *rightSwipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeIsDone:)];
+    rightSwipe.direction = UISwipeGestureRecognizerDirectionLeft;
+    
+    [self.calendarView.monthView addGestureRecognizer:leftSwipe];
+    [self.calendarView.monthView addGestureRecognizer:rightSwipe];
+    
+    
     [self performSelector:@selector(addSelectionForCurrentMonth) withObject:nil afterDelay:0.f];
+}
+
+
+-(void)swipeIsDone:(UISwipeGestureRecognizer *)swipe{
+
+    UIButton *button = [[UIButton alloc] init];
+    if (swipe.direction == UISwipeGestureRecognizerDirectionRight){
+        button.tag = LEFT_ARROW_TAG;
+    }
+    else{
+        button.tag = RIGHT_ARROW_TAG;
+    }
+    
+    [self buttonPressed:button];
 }
 
 
@@ -310,6 +335,8 @@
     [self.calendarView addSubview:nextMonth];
     
     self.calendarView.monthView.hidden = YES;
+    
+    [self.calendarView setUserInteractionEnabled:NO];
     [UIView animateWithDuration:0.5f
                      animations:^{
                          
@@ -322,6 +349,7 @@
                          nextMonth.frame = newNextMonthFrame;
                          
                      } completion:^(BOOL finished) {
+                         [self.calendarView setUserInteractionEnabled:YES];
                          [currentMonth removeFromSuperview];
                          [nextMonth removeFromSuperview];
                          self.calendarView.monthView.hidden = NO;
