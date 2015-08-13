@@ -12,7 +12,7 @@
 
 @interface LBCCalendarMonthView : UIView
 @property (nonatomic, strong) NSArray *dayArray;
-@property (nonatomic, strong) LBCCalendarObject *calendarObject;
+@property (nonatomic, weak) LBCCalendarObject *calendarObject;
 @property (nonatomic, assign) CGFloat size;
 
 - (void) refreshWithCalendarObject:(LBCCalendarObject *)calendarObject;
