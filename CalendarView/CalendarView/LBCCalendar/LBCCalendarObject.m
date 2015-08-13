@@ -147,19 +147,22 @@
 
 
 
-- (void) buildCalendarViewInView:(UIView *)view{
+- (void) buildCalendarViewInView:(UIView *)view withDelegate:(id)delegate{
+    self.delegate = delegate;
     [self configureCalendar];
     
     self.calendarView = [[[NSBundle mainBundle] loadNibNamed:@"LBCCalendarView" owner:nil options:nil] objectAtIndex:0];
+    self.calendarView.footerView.delegate = self;
+    self.calendarView.footerView.dataSource = self;
     [view addSubview:self.calendarView];
 
     [self.calendarView.monthView refreshWithCalendarObject:self];
     [self.calendarView.headerView refreshWithCalendarObject:self];
     
-    [self addSelectionForCurrentMonth];
     
     
     [self.calendarView setTranslatesAutoresizingMaskIntoConstraints:NO];
+    [self.calendarView.footerView setTranslatesAutoresizingMaskIntoConstraints:NO];
     [view addConstraint:[NSLayoutConstraint constraintWithItem:self.calendarView
                                                                   attribute:NSLayoutAttributeLeading
                                                                   relatedBy:NSLayoutRelationEqual
@@ -184,8 +187,12 @@
                                                     multiplier:1
                                                       constant:0]];
     
+    
 
     [view updateConstraints];
+    
+    
+    [self addSelectionForCurrentMonth];
 }
 
 
@@ -198,39 +205,135 @@
 - (void) addSelectionForCurrentMonth{
     if (!self.selectionArray)
         return;
-        
+    
+    NSMutableArray *tmpArray = [[NSMutableArray alloc] init];
+    
     for (LBCSelection *selection in self.selectionArray) {
-        [self addSelectionFromDate:selection.startDate toDate:selection.endDate];
-//        [self.calendarView.footerView addSlectionFromDate:selection.startDate toDate:selection.endDate];
+        if ([self addSelectionFromDate:selection.startDate toDate:selection.endDate]){
+            [tmpArray addObject:selection];
+        }
+    }
+    self.selectionCurrentMonthArray = [NSArray arrayWithArray:tmpArray];
+    
+    CGFloat newFooterHeight = [self.selectionCurrentMonthArray count] * 44.f;
+    self.calendarView.footerView.footerHeight.constant = newFooterHeight;
+    self.calendarView.footerView.backgroundColor = [UIColor clearColor];
+    self.calendarView.backgroundColor = [UIColor yellowColor];
+    self.calendarView.monthView.backgroundColor = [UIColor greenColor];
+    [self.calendarView.footerView reloadData];
+    
+    [self.calendarView updateConstraints];
+    
+    
+    if (self.delegate && [self.delegate respondsToSelector:@selector(calendarFrameHasChangedOfFrame:)]){
+        CGRect newFrame = CGRectMake(0,
+                                     0,
+                                     self.calendarView.frame.size.width,
+                                     self.calendarView.headerView.frame.size.height + self.calendarView.monthView.frame.size.height + newFooterHeight);
+        [self.delegate calendarFrameHasChangedOfFrame:newFrame];
     }
 }
 
 
+
 - (IBAction) buttonPressed:(id)sender{
+
     UIButton *b = (UIButton *)sender;
+    NSInteger monthDirection = 1;
+    
     if (b.tag == RIGHT_ARROW_TAG){
         self.currentMonth++;
     }
     else if (b.tag == LEFT_ARROW_TAG){
         self.currentMonth--;
+        monthDirection = -1;
     }
     
     [self configureCalendar];
+
+    UIImageView *currentMonth = [[UIImageView alloc] initWithFrame:self.calendarView.monthView.frame];
+    currentMonth.image = [self takeSnapshotFromView:self.calendarView.monthView];
+    
     [self.calendarView.monthView refreshWithCalendarObject:self];
     [self addSelectionForCurrentMonth];
+
+    CGRect newFrame = self.calendarView.monthView.frame;
+    CGFloat width = newFrame.size.width;
+    newFrame.origin.x = newFrame.origin.x + width * monthDirection;
+    UIImageView *nextMonth = [[UIImageView alloc] initWithFrame:newFrame];
+    nextMonth.image = [self takeSnapshotFromView:self.calendarView.monthView];
+    
+    
+    [self.calendarView addSubview:currentMonth];
+    [self.calendarView addSubview:nextMonth];
+    
+    [UIView animateWithDuration:0.5f
+                     animations:^{
+                         
+                         CGRect newCurrentMonthFrame = currentMonth.frame;
+                         newCurrentMonthFrame.origin.x = newCurrentMonthFrame.origin.x - width * monthDirection;
+                         currentMonth.frame = newCurrentMonthFrame;
+                         
+                         CGRect newNextMonthFrame = nextMonth.frame;
+                         newNextMonthFrame.origin.x = newNextMonthFrame.origin.x - width * monthDirection;
+                         nextMonth.frame = newNextMonthFrame;
+                         
+                     } completion:^(BOOL finished) {
+                         [currentMonth removeFromSuperview];
+                         [nextMonth removeFromSuperview];
+                     }];
+    
+
+    
     self.calendarView.headerView.monthLabel.text = [self getCurrentMonthYearName];
+    
+}
+
+
+- (UIImage *)takeSnapshotFromView:(UIView *)view {
+    UIGraphicsBeginImageContextWithOptions(view.bounds.size, NO, [UIScreen mainScreen].scale);
+    [view drawViewHierarchyInRect:view.bounds afterScreenUpdates:YES];
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return image;
 }
 
 
 
-//- (void) updateCalendarView:(UIView *)newView{
-//    [self.monthView removeFromSuperview];
-//    [self.headerView removeFromSuperview];
-//    self.monthView = nil;
-//    self.headerView = nil;
-//    [self buildCalendarViewInView:newView];
-//}
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
 
+    NSInteger maxRow = [self.selectionCurrentMonthArray count];
+    return maxRow;
+}
+
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"identifier"];
+    
+    if (!cell){
+        cell.userInteractionEnabled = YES;
+        cell = [[UITableViewCell alloc] init];
+        cell.backgroundColor = [UIColor clearColor];
+        cell.textLabel.numberOfLines = 0;
+        cell.textLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    }
+    
+    LBCSelection *selection = [self.selectionCurrentMonthArray objectAtIndex:indexPath.row];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"dd MMMM YYYY"];
+    NSString *startDate = [formatter stringFromDate:selection.startDate];
+    NSString *endDate = [formatter stringFromDate:selection.endDate];
+    
+    cell.textLabel.text = [NSString stringWithFormat:@"Du %@ au %@ : ", startDate, endDate];
+    
+    return cell;
+}
+
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return 44.f;
+}
 
 @end
 
