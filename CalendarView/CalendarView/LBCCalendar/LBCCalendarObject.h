@@ -79,6 +79,12 @@ typedef NS_ENUM(NSInteger, WeekDay){
     weekDaySaturday,
 };
 
+@protocol CalendarDelegate <NSObject>
+
+- (void) calendarFrameHasChangedOfFrame:(CGRect)frame;
+
+@end
+
 
 @class LBCCalendarView;
 
@@ -90,15 +96,19 @@ typedef NS_ENUM(NSInteger, WeekDay){
 @end
 
 
-@interface LBCCalendarObject : NSObject
+@interface LBCCalendarObject : NSObject <UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic, assign) NSInteger firstDayOfLastMonth;
 @property (nonatomic, assign) NSInteger maxDayOfLastMonth;
 @property (nonatomic, assign) NSInteger maxDayOfCurrentMonth;
-@property (nonatomic, strong) IBOutlet LBCCalendarView *calendarView;
+@property (nonatomic, strong) LBCCalendarView *calendarView;
 @property (nonatomic, assign) NSInteger currentMonth;
 @property (nonatomic, strong) NSArray * selectionArray;
+@property (nonatomic, strong) NSArray * selectionCurrentMonthArray;
 
-@property (nonatomic, weak) IBOutlet NSLayoutConstraint *widthConstraint;
+@property (nonatomic, weak) id <CalendarDelegate> delegate;
+
+
+//@property (nonatomic, weak) IBOutlet NSLayoutConstraint *widthConstraint;
 
 /**
  *  Add an array of LBCSelection. Display selection automatically
@@ -114,10 +124,10 @@ typedef NS_ENUM(NSInteger, WeekDay){
  *  @param startDate start of the selection
  *  @param endDate   end of the selection
  */
-- (void) addSelectionFromDate:(NSDate *)startDate toDate:(NSDate *)endDate;
+- (BOOL) addSelectionFromDate:(NSDate *)startDate toDate:(NSDate *)endDate;
 
 
-- (void) buildCalendarViewInView:(UIView *)view;
+- (void) buildCalendarViewInView:(UIView *)view withDelegate:(id)delegate;
 
 
 //- (void) updateCalendarView:(UIView *)newView;
