@@ -16,16 +16,16 @@
 - (void) viewDidLoad{
     [super viewDidLoad];
     
-    self.view.backgroundColor = [UIColor whiteColor];
-    self.calBGView.backgroundColor = [UIColor yellowColor];
+//    self.view.backgroundColor = [UIColor whiteColor];
+//    self.calBGView.backgroundColor = [UIColor yellowColor];
     self.calendarObject = [[LBCCalendarObject alloc] init];
 //    UIView *calView = [self.calendarObject buildCalendarViewInFrame:self.view.frame];
 //    [self.view addSubview:calView];
     
-    UITapGestureRecognizer *tg = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(addSelection:)];
-    [self.view addGestureRecognizer:tg];
+//    UITapGestureRecognizer *tg = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(addSelection:)];
+//    [self.view addGestureRecognizer:tg];
 
-    [self.calendarObject buildCalendarViewInView:self.view];
+//    [self.calendarObject buildCalendarViewInView:self.view];
 
     NSDateComponents *dateComponents = [[NSDateComponents alloc] init];
     [dateComponents setDay:24];

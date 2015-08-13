@@ -8,7 +8,6 @@
 
 #import "LBCCalendarViewControllerConstraint.h"
 #import "LBCCalendarView.h"
-#import "LBCCalendarObject.h"
 
 @implementation LBCCalendarViewControllerConstraint
 
@@ -42,7 +41,7 @@
 //    frame.size.height += 10;
 //    self.calendarView.frame = frame;
     
-    self.calViewHeight.constant = [self.calendarView getNewFrameHeight];
+//    self.calViewHeight.constant = [self.calendarView getNewFrameHeight];
     
     
 //    self.calViewWidth.constant += 10;
@@ -59,13 +58,8 @@
     
     [super viewDidAppear:animated];
 
-//    UIView *v = [[UIView alloc] initWithFrame:self.calView.frame];
-//    [self.view addSubview:v];
-//    v.alpha = 0.5f;
-//    v.backgroundColor = [UIColor redColor];
-    
-    LBCCalendarObject *co = [[LBCCalendarObject alloc] init];
-    [co buildCalendarViewInView:self.calView];
+    self.calObject = [[LBCCalendarObject alloc] init];
+    [self.calObject buildCalendarViewInView:self.calView withDelegate:self];
     
     NSDateComponents *dateComponents = [[NSDateComponents alloc] init];
     [dateComponents setDay:24];
@@ -88,10 +82,16 @@
     LBCSelection *selec2 = [[LBCSelection alloc] initWithStartDate:startDate2 andEndDate:endDate2];
     LBCSelection *selec3 = [[LBCSelection alloc] initWithStartDate:startDate3 andEndDate:endDate3];
     
-    [co addSelectionArray:@[selec, selec2, selec3]];
+    [self.calObject addSelectionArray:@[selec, selec2, selec3]];
 
 
+    
     [self displayFromOfSubviewInView:self.view];
+}
+
+
+- (IBAction)selector:(id)sender{
+    NSLog(@"selector");
 }
 
 
@@ -103,7 +103,9 @@
 }
 
 
-
+- (void)calendarFrameHasChangedOfFrame:(CGRect)frame{
+    NSLog(@"frame: %@", NSStringFromCGRect(frame));
+}
 
 @end
 
