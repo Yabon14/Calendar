@@ -6,9 +6,9 @@
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LBCCalendarView"/>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LBCCalendarObject"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view tag="1000" contentMode="scaleToFill" id="iN0-l3-epB" customClass="LBCCalendarView">
+        <view clipsSubviews="YES" tag="1000" contentMode="scaleToFill" id="iN0-l3-epB" customClass="LBCCalendarView">
             <rect key="frame" x="0.0" y="0.0" width="350" height="475"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
@@ -106,7 +106,7 @@
                             </variation>
                         </label>
                     </subviews>
-                    <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstItem="f6S-m8-6xM" firstAttribute="leading" secondItem="MlO-Ws-0hc" secondAttribute="trailing" id="0aw-bT-hvZ"/>
                         <constraint firstItem="f6S-m8-6xM" firstAttribute="height" secondItem="OiB-G9-f3n" secondAttribute="height" id="1rI-Ek-Oav"/>
@@ -116,7 +116,6 @@
                         <constraint firstAttribute="bottom" secondItem="CPj-08-729" secondAttribute="bottom" id="5dk-MG-ggi"/>
                         <constraint firstItem="jiN-la-CoT" firstAttribute="top" secondItem="3d5-4U-imT" secondAttribute="bottom" id="74F-A7-mni"/>
                         <constraint firstItem="acg-f4-Clr" firstAttribute="height" secondItem="MFO-hq-91V" secondAttribute="height" multiplier="2:3" id="82u-2T-BJl"/>
-                        <constraint firstAttribute="width" secondItem="MFO-hq-91V" secondAttribute="height" multiplier="14:3" id="B00-da-A2M"/>
                         <constraint firstItem="f6S-m8-6xM" firstAttribute="height" secondItem="MlO-Ws-0hc" secondAttribute="height" id="Cl8-a5-bWc"/>
                         <constraint firstItem="f6S-m8-6xM" firstAttribute="height" secondItem="s6o-40-Ob4" secondAttribute="height" id="Dfi-cA-SQc"/>
                         <constraint firstItem="vIP-X8-RAF" firstAttribute="leading" secondItem="OiB-G9-f3n" secondAttribute="trailing" id="EcI-HZ-evG"/>
@@ -155,11 +154,6 @@
                         <constraint firstItem="s6o-40-Ob4" firstAttribute="leading" secondItem="f6S-m8-6xM" secondAttribute="trailing" id="rU1-wx-Fpy"/>
                         <constraint firstItem="5LW-Sy-mHR" firstAttribute="leading" secondItem="acg-f4-Clr" secondAttribute="trailing" id="unN-UC-khd"/>
                     </constraints>
-                    <variation key="default">
-                        <mask key="constraints">
-                            <exclude reference="B00-da-A2M"/>
-                        </mask>
-                    </variation>
                     <connections>
                         <outlet property="dayLabel1" destination="jiN-la-CoT" id="f5b-pd-aPj"/>
                         <outlet property="dayLabel2" destination="CPj-08-729" id="gIW-nA-mFW"/>
@@ -168,9 +162,9 @@
                         <outlet property="dayLabel5" destination="MlO-Ws-0hc" id="vn2-Iv-tXi"/>
                         <outlet property="dayLabel6" destination="f6S-m8-6xM" id="YbH-pL-LXO"/>
                         <outlet property="dayLabel7" destination="s6o-40-Ob4" id="Idu-6C-mBi"/>
-                        <outlet property="leftButton" destination="3d5-4U-imT" id="Tqg-g4-TAb"/>
+                        <outlet property="leftButton" destination="3d5-4U-imT" id="fLA-JP-Kih"/>
                         <outlet property="monthLabel" destination="acg-f4-Clr" id="9J5-4f-V2O"/>
-                        <outlet property="rightButton" destination="5LW-Sy-mHR" id="gS9-us-4zA"/>
+                        <outlet property="rightButton" destination="5LW-Sy-mHR" id="BKv-DT-WIr"/>
                     </connections>
                 </view>
                 <view tag="1001" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Yw8-pc-FAW" customClass="LBCCalendarMonthView">
@@ -851,35 +845,38 @@
                         </mask>
                     </variation>
                 </view>
-                <view tag="1002" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mzu-tP-H2k" customClass="LBCCalendarFooterView">
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="J0P-77-xpB" customClass="LBCCalendarFooterView">
                     <rect key="frame" x="0.0" y="375" width="350" height="100"/>
-                    <color key="backgroundColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstAttribute="height" priority="250" constant="100" id="M5x-eg-Ucm"/>
+                        <constraint firstAttribute="height" constant="100" id="6MX-fg-Acp"/>
                     </constraints>
-                </view>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="0X4-Pn-KuN"/>
+                        <outlet property="delegate" destination="-1" id="6q8-MG-q3v"/>
+                        <outlet property="footerHeight" destination="6MX-fg-Acp" id="qdv-bv-xZW"/>
+                    </connections>
+                </tableView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="MFO-hq-91V" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="5L8-Vh-n0x"/>
                 <constraint firstAttribute="trailing" secondItem="MFO-hq-91V" secondAttribute="trailing" id="5WF-5A-XXc"/>
-                <constraint firstItem="mzu-tP-H2k" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="HQ9-ke-vOy"/>
                 <constraint firstItem="MFO-hq-91V" firstAttribute="width" secondItem="Yw8-pc-FAW" secondAttribute="width" id="MTR-q4-Cfl"/>
                 <constraint firstItem="Yw8-pc-FAW" firstAttribute="top" secondItem="MFO-hq-91V" secondAttribute="bottom" id="PAD-Yn-hdN"/>
-                <constraint firstAttribute="trailing" secondItem="mzu-tP-H2k" secondAttribute="trailing" id="QBs-pg-FHG"/>
                 <constraint firstItem="Yw8-pc-FAW" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Z5a-Xa-cxu"/>
-                <constraint firstItem="Yw8-pc-FAW" firstAttribute="width" secondItem="mzu-tP-H2k" secondAttribute="width" id="gEl-4F-jN1"/>
                 <constraint firstAttribute="trailing" secondItem="Yw8-pc-FAW" secondAttribute="trailing" id="jam-h4-0rr"/>
-                <constraint firstAttribute="bottom" secondItem="mzu-tP-H2k" secondAttribute="bottom" id="lPt-2k-xMv"/>
-                <constraint firstItem="mzu-tP-H2k" firstAttribute="top" secondItem="Yw8-pc-FAW" secondAttribute="bottom" id="niV-7q-XCX"/>
+                <constraint firstItem="J0P-77-xpB" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="jqy-ID-fPc"/>
+                <constraint firstItem="J0P-77-xpB" firstAttribute="top" secondItem="Yw8-pc-FAW" secondAttribute="bottom" id="sxw-4V-7B8"/>
+                <constraint firstAttribute="bottom" secondItem="J0P-77-xpB" secondAttribute="bottom" id="tSo-XY-N0t"/>
+                <constraint firstAttribute="trailing" secondItem="J0P-77-xpB" secondAttribute="trailing" id="wq7-xY-8p8"/>
                 <constraint firstItem="MFO-hq-91V" firstAttribute="width" secondItem="MFO-hq-91V" secondAttribute="height" multiplier="14:3" id="xl5-Em-AIc"/>
                 <constraint firstItem="MFO-hq-91V" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="yr9-Sr-sZ7"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
-                <outlet property="footerHeight" destination="M5x-eg-Ucm" id="3bP-Wa-F6v"/>
-                <outlet property="footerView" destination="mzu-tP-H2k" id="qxe-YS-Nes"/>
+                <outlet property="footerView" destination="J0P-77-xpB" id="f4D-Ox-Mm0"/>
                 <outlet property="headerView" destination="MFO-hq-91V" id="Xgi-IG-wHv"/>
                 <outlet property="monthView" destination="Yw8-pc-FAW" id="dxp-47-phY"/>
             </connections>
