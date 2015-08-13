@@ -87,11 +87,11 @@
     NSDate *endDate5 = [[NSCalendar currentCalendar] dateByAddingComponents:dateComponents toDate:[NSDate date] options:0];
     
     
-    LBCSelection *selec = [[LBCSelection alloc] initWithStartDate:startDate andEndDate:endDate];
-    LBCSelection *selec2 = [[LBCSelection alloc] initWithStartDate:startDate2 andEndDate:endDate2];
-    LBCSelection *selec3 = [[LBCSelection alloc] initWithStartDate:startDate3 andEndDate:endDate3];
-    LBCSelection *selec4 = [[LBCSelection alloc] initWithStartDate:startDate4 andEndDate:endDate4];
-    LBCSelection *selec5 = [[LBCSelection alloc] initWithStartDate:startDate5 andEndDate:endDate5];
+    LBCSelection *selec = [[LBCSelection alloc] initWithStartDate:startDate andEndDate:endDate andPrice:200];
+    LBCSelection *selec2 = [[LBCSelection alloc] initWithStartDate:startDate2 andEndDate:endDate2 andPrice:300];
+    LBCSelection *selec3 = [[LBCSelection alloc] initWithStartDate:startDate3 andEndDate:endDate3 andPrice:350];
+    LBCSelection *selec4 = [[LBCSelection alloc] initWithStartDate:startDate4 andEndDate:endDate4 andPrice:100];
+    LBCSelection *selec5 = [[LBCSelection alloc] initWithStartDate:startDate5 andEndDate:endDate5 andPrice:390];
     
 //    [self.calObject addSelectionArray:];
 

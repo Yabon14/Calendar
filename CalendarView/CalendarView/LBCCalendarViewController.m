@@ -44,11 +44,11 @@
     NSDate *endDate3 = [[NSCalendar currentCalendar] dateByAddingComponents:dateComponents toDate:[NSDate date] options:0];
     
     
-    LBCSelection *selec = [[LBCSelection alloc] initWithStartDate:startDate andEndDate:endDate];
-    LBCSelection *selec2 = [[LBCSelection alloc] initWithStartDate:startDate2 andEndDate:endDate2];
-    LBCSelection *selec3 = [[LBCSelection alloc] initWithStartDate:startDate3 andEndDate:endDate3];
-    
-    [self.calendarObject addSelectionArray:@[selec, selec2, selec3]];
+//    LBCSelection *selec = [[LBCSelection alloc] initWithStartDate:startDate andEndDate:endDate];
+//    LBCSelection *selec2 = [[LBCSelection alloc] initWithStartDate:startDate2 andEndDate:endDate2];
+//    LBCSelection *selec3 = [[LBCSelection alloc] initWithStartDate:startDate3 andEndDate:endDate3];
+//    
+//    [self.calendarObject addSelectionArray:@[selec, selec2, selec3]];
     
 //    NSLog(@"%@", NSStringFromCGRect(self.calView.frame));
 //    if (self.view.frame.size.width < self.view.frame.size.height){
