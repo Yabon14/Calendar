@@ -59,7 +59,6 @@
     [super viewDidAppear:animated];
 
     self.calObject = [[LBCCalendarObject alloc] init];
-    [self.calObject buildCalendarViewInView:self.calView withDelegate:self];
     
     NSDateComponents *dateComponents = [[NSDateComponents alloc] init];
     [dateComponents setDay:24];
@@ -77,13 +76,26 @@
     [dateComponents setDay:48];
     NSDate *endDate3 = [[NSCalendar currentCalendar] dateByAddingComponents:dateComponents toDate:[NSDate date] options:0];
     
+    [dateComponents setDay:80];
+    NSDate *startDate4 = [[NSCalendar currentCalendar] dateByAddingComponents:dateComponents toDate:[NSDate date] options:0];
+    [dateComponents setDay:90];
+    NSDate *endDate4 = [[NSCalendar currentCalendar] dateByAddingComponents:dateComponents toDate:[NSDate date] options:0];
+    
+    [dateComponents setDay:-20];
+    NSDate *startDate5 = [[NSCalendar currentCalendar] dateByAddingComponents:dateComponents toDate:[NSDate date] options:0];
+    [dateComponents setDay:-5];
+    NSDate *endDate5 = [[NSCalendar currentCalendar] dateByAddingComponents:dateComponents toDate:[NSDate date] options:0];
+    
     
     LBCSelection *selec = [[LBCSelection alloc] initWithStartDate:startDate andEndDate:endDate];
     LBCSelection *selec2 = [[LBCSelection alloc] initWithStartDate:startDate2 andEndDate:endDate2];
     LBCSelection *selec3 = [[LBCSelection alloc] initWithStartDate:startDate3 andEndDate:endDate3];
+    LBCSelection *selec4 = [[LBCSelection alloc] initWithStartDate:startDate4 andEndDate:endDate4];
+    LBCSelection *selec5 = [[LBCSelection alloc] initWithStartDate:startDate5 andEndDate:endDate5];
     
-    [self.calObject addSelectionArray:@[selec, selec2, selec3]];
+//    [self.calObject addSelectionArray:];
 
+    [self.calObject buildCalendarViewInView:self.calView withDelegate:self andSelectionArray:@[selec, selec2, selec3, selec4, selec5]];
 
     
     [self displayFromOfSubviewInView:self.view];
