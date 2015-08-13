@@ -51,13 +51,13 @@
                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="500" verticalHuggingPriority="500" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5LW-Sy-mHR">
+                        <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="500" verticalHuggingPriority="500" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5LW-Sy-mHR">
                             <rect key="frame" x="300" y="0.0" width="50" height="50"/>
                             <constraints>
                                 <constraint firstAttribute="width" secondItem="5LW-Sy-mHR" secondAttribute="height" multiplier="1:1" id="2rt-2s-lCR"/>
                                 <constraint firstAttribute="width" secondItem="5LW-Sy-mHR" secondAttribute="height" multiplier="1:1" id="6ha-3B-aSy"/>
                             </constraints>
-                            <state key="normal" backgroundImage="right_arrow">
+                            <state key="normal" image="right_arrow">
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
                             <variation key="default">
@@ -66,13 +66,13 @@
                                 </mask>
                             </variation>
                         </button>
-                        <button opaque="NO" contentMode="center" horizontalHuggingPriority="500" verticalHuggingPriority="500" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3d5-4U-imT">
+                        <button opaque="NO" contentMode="center" horizontalHuggingPriority="500" verticalHuggingPriority="500" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3d5-4U-imT">
                             <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                             <constraints>
                                 <constraint firstAttribute="width" secondItem="3d5-4U-imT" secondAttribute="height" multiplier="1:1" id="4wd-ju-wYn"/>
                                 <constraint firstAttribute="width" secondItem="3d5-4U-imT" secondAttribute="height" multiplier="1:1" id="uwR-i7-73j"/>
                             </constraints>
-                            <state key="normal" backgroundImage="left_arrow">
+                            <state key="normal" image="left_arrow">
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
                             <variation key="default">
