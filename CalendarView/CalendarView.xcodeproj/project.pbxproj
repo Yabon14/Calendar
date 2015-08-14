@@ -89,19 +89,9 @@
 		1C514BFD1B74D31A001216B0 /* LBCCalendar */ = {
 			isa = PBXGroup;
 			children = (
-				1C514BFE1B74D31A001216B0 /* LBCCalendarHeaderView.h */,
-				1C514BFF1B74D31A001216B0 /* LBCCalendarHeaderView.m */,
+				1CEDCCB11B7DD7F0006A76B5 /* LBCCalendarView */,
 				1C514C001B74D31A001216B0 /* LBCCalendarObject.h */,
 				1C514C011B74D31A001216B0 /* LBCCalendarObject.m */,
-				1C514C021B74D31A001216B0 /* LBCDayView.h */,
-				1C514C031B74D31A001216B0 /* LBCDayView.m */,
-				1C514C041B74D31A001216B0 /* LBCCalendarMonthView.h */,
-				1C514C051B74D31A001216B0 /* LBCCalendarMonthView.m */,
-				1C514C0A1B78CD50001216B0 /* LBCCalendarView.h */,
-				1C514C0D1B78CDA6001216B0 /* LBCCalendarView.xib */,
-				1C514C0B1B78CD50001216B0 /* LBCCalendarView.m */,
-				1C988FA61B7A47E500A2E9FD /* LBCCalendarFooterView.h */,
-				1C988FA71B7A47E500A2E9FD /* LBCCalendarFooterView.m */,
 			);
 			path = LBCCalendar;
 			sourceTree = "<group>";
@@ -168,6 +158,24 @@
 				1CA928B61B74B4E900E38A33 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		1CEDCCB11B7DD7F0006A76B5 /* LBCCalendarView */ = {
+			isa = PBXGroup;
+			children = (
+				1C514BFE1B74D31A001216B0 /* LBCCalendarHeaderView.h */,
+				1C514BFF1B74D31A001216B0 /* LBCCalendarHeaderView.m */,
+				1C514C021B74D31A001216B0 /* LBCDayView.h */,
+				1C514C031B74D31A001216B0 /* LBCDayView.m */,
+				1C514C041B74D31A001216B0 /* LBCCalendarMonthView.h */,
+				1C514C051B74D31A001216B0 /* LBCCalendarMonthView.m */,
+				1C514C0A1B78CD50001216B0 /* LBCCalendarView.h */,
+				1C514C0D1B78CDA6001216B0 /* LBCCalendarView.xib */,
+				1C514C0B1B78CD50001216B0 /* LBCCalendarView.m */,
+				1C988FA61B7A47E500A2E9FD /* LBCCalendarFooterView.h */,
+				1C988FA71B7A47E500A2E9FD /* LBCCalendarFooterView.m */,
+			);
+			name = LBCCalendarView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
