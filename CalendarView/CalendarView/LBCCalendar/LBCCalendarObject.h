@@ -103,17 +103,8 @@ typedef NS_ENUM(NSInteger, WeekDay){
 @property (nonatomic, assign) NSInteger firstDayOfLastMonth;
 @property (nonatomic, assign) NSInteger maxDayOfLastMonth;
 @property (nonatomic, assign) NSInteger maxDayOfCurrentMonth;
-@property (nonatomic, strong) LBCCalendarView *calendarView;
-
 @property (nonatomic, assign) NSInteger currentMonth;
-@property (nonatomic, strong) NSDate *dateMin;
-@property (nonatomic, strong) NSDate *dateMax;
 @property (nonatomic, strong) NSDate *startDate;
-
-@property (nonatomic, strong) NSArray * selectionArray;
-@property (nonatomic, strong) NSArray * selectionCurrentMonthArray;
-
-@property (nonatomic, weak) id <CalendarDelegate> delegate;
 
 
 #pragma mark - Proteccted

@@ -28,6 +28,21 @@
 @end
 
 
+
+@interface LBCCalendarObject()
+@property (nonatomic, strong) LBCCalendarView *calendarView;
+
+@property (nonatomic, strong) NSDate *dateMin;
+@property (nonatomic, strong) NSDate *dateMax;
+@property (nonatomic, assign) BOOL canGoToPreviousMonth;
+@property (nonatomic, assign) BOOL canGoToNextMonth;
+
+@property (nonatomic, strong) NSArray * selectionArray;
+@property (nonatomic, strong) NSArray * selectionCurrentMonthArray;
+
+@property (nonatomic, weak) id <CalendarDelegate> delegate;
+@end
+
 @implementation LBCCalendarObject
 
 - (id) init{
@@ -37,6 +52,9 @@
         self.dateMin = nil;
         self.startDate = [NSDate date];
         self.dateMax = nil;
+        
+        self.canGoToPreviousMonth = YES;
+        self.canGoToNextMonth = YES;
     }
     return self;
 }
@@ -198,6 +216,7 @@
     
     [self.calendarView.monthView refreshWithCalendarObject:self];
     [self.calendarView.headerView refreshWithCalendarObject:self];
+    [self clampPosition];
     
     UISwipeGestureRecognizer *leftSwipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeIsDone:)];
     leftSwipe.direction = UISwipeGestureRecognizerDirectionRight;
@@ -213,6 +232,8 @@
 }
 
 
+
+
 -(void)swipeIsDone:(UISwipeGestureRecognizer *)swipe{
 
     UIButton *button = [[UIButton alloc] init];
@@ -225,6 +246,7 @@
     
     [self buttonPressed:button];
 }
+
 
 
 
@@ -247,6 +269,8 @@
     }
     self.startDate = self.dateMin;
 }
+
+
 
 
 
@@ -282,6 +306,8 @@
 
 
 
+
+
 - (IBAction) buttonPressed:(id)sender{
 
     UIButton *b = (UIButton *)sender;
@@ -291,56 +317,50 @@
     
     if (b.tag == RIGHT_ARROW_TAG){
         
-        NSCalendar *calendar = [NSCalendar currentCalendar];
-        NSDateComponents *dateComponents = [[NSDateComponents alloc] init];
-        
-        [dateComponents setMonth:(self.currentMonth + 1)];
-        NSDate *dateForNextMonth = [calendar dateByAddingComponents:dateComponents toDate:self.startDate options:0];
-        NSDateComponents *newComponents = [calendar components:NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay fromDate:dateForNextMonth];
-        [newComponents setDay:1];
-        NSDate *firstDayOfNextMonth = [calendar dateFromComponents:newComponents];
-        
-        if (!self.dateMax || [firstDayOfNextMonth compare:self.dateMax] != NSOrderedDescending){
+        if (self.canGoToNextMonth){
             self.currentMonth++;
             updateMonth = YES;
         }
     }
     else if (b.tag == LEFT_ARROW_TAG){
         
-        if (!self.dateMin || self.currentMonth > 0){
+        if (self.canGoToPreviousMonth){
             self.currentMonth--;
             monthDirection = -1;
             updateMonth = YES;
         }
     }
     
-    
-    if (!updateMonth)
-        return;
-    
-    
-    
-    
-    [self configureCalendar];
+    if (updateMonth){
+        [self configureCalendar];
+        [self clampPosition];
+        [self animateAndUpdateMonthInDirection:monthDirection];
+    }
+}
 
+
+
+
+- (void) animateAndUpdateMonthInDirection:(NSInteger)monthDirection{
+    // Take snapshot of current month
     UIImageView *currentMonth = [[UIImageView alloc] initWithFrame:self.calendarView.monthView.frame];
     currentMonth.image = [self takeSnapshotFromView:self.calendarView.monthView];
     
+    // update current month
     [self.calendarView.monthView refreshWithCalendarObject:self];
     [self addSelectionForCurrentMonth];
-
+    
+    // Take snapshot of updated month
     CGRect newFrame = self.calendarView.monthView.frame;
     CGFloat width = newFrame.size.width;
     newFrame.origin.x = newFrame.origin.x + width * monthDirection;
     UIImageView *nextMonth = [[UIImageView alloc] initWithFrame:newFrame];
     nextMonth.image = [self takeSnapshotFromView:self.calendarView.monthView];
     
-    
+    // Animation
     [self.calendarView addSubview:currentMonth];
     [self.calendarView addSubview:nextMonth];
-    
     self.calendarView.monthView.hidden = YES;
-    
     [self.calendarView setUserInteractionEnabled:NO];
     [UIView animateWithDuration:0.5f
                      animations:^{
@@ -360,11 +380,44 @@
                          self.calendarView.monthView.hidden = NO;
                      }];
     
-
     
+    // Update header
     self.calendarView.headerView.monthLabel.text = [self getCurrentMonthYearName];
-    
 }
+
+
+
+
+- (void) clampPosition{
+    
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *dateComponents = [[NSDateComponents alloc] init];
+    
+    [dateComponents setMonth:(self.currentMonth + 1)];
+    NSDate *dateForNextMonth = [calendar dateByAddingComponents:dateComponents toDate:self.startDate options:0];
+    NSDateComponents *newComponents = [calendar components:NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay fromDate:dateForNextMonth];
+    [newComponents setDay:1];
+    NSDate *firstDayOfNextMonth = [calendar dateFromComponents:newComponents];
+    
+    if (!self.dateMax || [firstDayOfNextMonth compare:self.dateMax] != NSOrderedDescending){
+        self.canGoToNextMonth = YES;
+    }
+    else{
+        self.canGoToNextMonth = NO;
+    }
+    self.calendarView.headerView.rightButton.hidden = !self.canGoToNextMonth;
+
+
+    if (!self.dateMin || self.currentMonth > 0){
+        self.canGoToPreviousMonth = YES;
+    }
+    else{
+        self.canGoToPreviousMonth = NO;
+    }
+    self.calendarView.headerView.leftButton.hidden = !self.canGoToPreviousMonth;
+}
+
+
 
 
 - (UIImage *)takeSnapshotFromView:(UIView *)view {
@@ -377,8 +430,8 @@
 
 
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
 
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     NSInteger maxRow = [self.selectionCurrentMonthArray count];
     return maxRow;
 }
