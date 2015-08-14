@@ -14,7 +14,6 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *calViewHeight;
 @property (nonatomic, strong) IBOutlet UIView *calView;
 @property (nonatomic, strong) LBCCalendarObject *calObject;
-//@property (nonatomic, strong) LBCCalendarView *calendarView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *calViewWidth;
 
 @end

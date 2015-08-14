@@ -15,42 +15,6 @@
     [super viewDidLoad];
     
     self.view.backgroundColor = [UIColor whiteColor];
-
-//    self.calendarView = [[[NSBundle mainBundle] loadNibNamed:@"LBCCalendarView" owner:nil options:nil] objectAtIndex:0];
-//    [self.calView addSubview:self.calendarView];
-    
-//    LBCCalendarObject *co = [[LBCCalendarObject alloc] init];
-//    [co buildCalendarViewInView:self.calView];
-    
-    
-//    UITapGestureRecognizer *tg = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(action)];
-//    [self.view addGestureRecognizer:tg];
-
-//    [self.calendarView addHeightConstraint];
-//    self.calView.clipsToBounds = YES;
-}
-
-
-- (void)action{
-
-//    self.calendarView.calendarHeight.constant += 10;
-    
-//    self.calendarView.footerHeight.constant += 10;
-    
-//    CGRect frame = self.calendarView.frame;
-//    frame.size.height += 10;
-//    self.calendarView.frame = frame;
-    
-//    self.calViewHeight.constant = [self.calendarView getNewFrameHeight];
-    
-    
-//    self.calViewWidth.constant += 10;
-    
-//    CGRect frame2 = self.calView.frame;
-//    frame2.size.height += 10;
-//    self.calView.frame = frame2;
-    
-    [self displayFromOfSubviewInView:self.view];
 }
 
 
@@ -93,9 +57,7 @@
     LBCSelection *selec4 = [[LBCSelection alloc] initWithStartDate:startDate4 andEndDate:endDate4 andPrice:100];
     LBCSelection *selec5 = [[LBCSelection alloc] initWithStartDate:startDate5 andEndDate:endDate5 andPrice:390];
     
-//    [self.calObject addSelectionArray:];
-
-    [self.calObject buildCalendarViewInView:self.calView withDelegate:self andSelectionArray:nil];//@[selec, selec2, selec3, selec4, selec5]];
+    [self.calObject buildCalendarViewInView:self.calView withDelegate:self andSelectionArray:@[selec, selec2, selec3, selec4, selec5]];
 
     
     [self displayFromOfSubviewInView:self.view];
