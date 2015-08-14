@@ -13,7 +13,6 @@
 @interface LBCDayView : UILabel
 
 @property (nonatomic, assign) DayState dayState;
-//@property (nonatomic, strong) UILabel *dayLabel;
 @property (nonatomic, strong) NSDateComponents *dateComponents;
 @property (nonatomic, assign) BOOL isLastDayInMonth;
 

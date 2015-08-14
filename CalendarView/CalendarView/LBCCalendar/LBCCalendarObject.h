@@ -20,6 +20,8 @@
 #define MAX_WEEK_PER_MONTH          6
 #define MAX_DAY_PER_WEEK            7
 
+#define CELL_HEIGHT                 44.f
+
 
 //Define in Tools
 #define F1             [UIFont systemFontOfSize:11.0f]
@@ -113,32 +115,23 @@ typedef NS_ENUM(NSInteger, WeekDay){
 @property (nonatomic, weak) id <CalendarDelegate> delegate;
 
 
-//@property (nonatomic, weak) IBOutlet NSLayoutConstraint *widthConstraint;
-
-/**
- *  Add an array of LBCSelection. Display selection automatically
- *
- *  @param selectionArray array of LBCSelection
- */
-- (void) addSelectionArray:(NSArray *)selectionArray;
-
-
-/**
- *  Add a selection from start date to end date
- *
- *  @param startDate start of the selection
- *  @param endDate   end of the selection
- */
-- (BOOL) addSelectionFromDate:(NSDate *)startDate toDate:(NSDate *)endDate;
-
-
-- (void) buildCalendarViewInView:(UIView *)view withDelegate:(id)delegate andSelectionArray:(NSArray *)selectionArray;
-
-
-//- (void) updateCalendarView:(UIView *)newView;
-
+#pragma mark - Proteccted
 
 - (NSString *)getCurrentMonthYearName;
+
+
+
+
+#pragma mark - Build calendar
+
+/**
+ *  build a calendarView in view and add delegate and an array of LBCSelection
+ *
+ *  @param view           superview of calendarView
+ *  @param delegate       delegate of calendarObject (to get the new height of the view when you change month)
+ *  @param selectionArray array of LBCSelection
+ */
+- (void) buildCalendarViewInView:(UIView *)view withDelegate:(id)delegate andSelectionArray:(NSArray *)selectionArray;
 
 
 

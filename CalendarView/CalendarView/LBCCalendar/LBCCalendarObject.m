@@ -259,7 +259,7 @@
     }
     self.selectionCurrentMonthArray = [NSArray arrayWithArray:tmpArray];
     
-    CGFloat newFooterHeight = [self.selectionCurrentMonthArray count] * 44.f;
+    CGFloat newFooterHeight = [self.selectionCurrentMonthArray count] * CELL_HEIGHT;
     self.calendarView.footerView.footerHeight.constant = newFooterHeight;
     [self.calendarView.footerView reloadData];
     
@@ -388,6 +388,7 @@
         cell = [[UITableViewCell alloc] init];
         cell.backgroundColor = [UIColor clearColor];
         cell.textLabel.numberOfLines = 0;
+        cell.textLabel.font = F7;
         cell.textLabel.lineBreakMode = NSLineBreakByWordWrapping;
         [cell setSeparatorInset:UIEdgeInsetsZero];
     }
@@ -399,8 +400,8 @@
     NSString *endDate = [formatter stringFromDate:selection.endDate];
 
 
-    NSString *priceString = [NSString stringWithFormat:@"%lu €", selection.price];
-    NSString *completeString = [NSString stringWithFormat:@"Du %@ au %@ : %@", startDate, endDate, priceString];
+    NSString *priceString = [NSString stringWithFormat:NSLocalizedString(@"%lu€", @"%lu€"), selection.price];
+    NSString *completeString = [NSString stringWithFormat:NSLocalizedString(@"Du %@ au %@ : %@", @"Du %@ au %@ : %@"), startDate, endDate, priceString];
     NSRange priceRange = [completeString rangeOfString:priceString];
     
     NSMutableAttributedString* attributedString = [[NSMutableAttributedString alloc] initWithString:completeString];
@@ -414,7 +415,7 @@
 
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 44.f;
+    return CELL_HEIGHT;
 }
 
 @end

@@ -27,7 +27,13 @@
 #pragma clang diagnostic pop
 
     
-    NSArray *dayArray = @[@"Sa", @"Di", @"Lu", @"Ma", @"Me", @"Je", @"Ve"];
+    NSArray *dayArray = @[NSLocalizedString(@"Sa", nil),
+                          NSLocalizedString(@"Di", nil),
+                          NSLocalizedString(@"Lu", nil),
+                          NSLocalizedString(@"Ma", nil),
+                          NSLocalizedString(@"Me", nil),
+                          NSLocalizedString(@"Je", nil),
+                          NSLocalizedString(@"Ve", nil)];
     NSArray *dayLabelArray = @[self.dayLabel1, self.dayLabel2, self.dayLabel3, self.dayLabel4, self.dayLabel5, self.dayLabel6, self.dayLabel7];
 
     for (UILabel *dayLabel in dayLabelArray) {
