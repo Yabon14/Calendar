@@ -95,7 +95,7 @@
     
 //    [self.calObject addSelectionArray:];
 
-    [self.calObject buildCalendarViewInView:self.calView withDelegate:self andSelectionArray:@[selec, selec2, selec3, selec4, selec5]];
+    [self.calObject buildCalendarViewInView:self.calView withDelegate:self andSelectionArray:nil];//@[selec, selec2, selec3, selec4, selec5]];
 
     
     [self displayFromOfSubviewInView:self.view];
