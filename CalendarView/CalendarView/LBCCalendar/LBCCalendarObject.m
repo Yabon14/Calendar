@@ -34,8 +34,9 @@
     self = [super init];
     if (self){
         self.currentMonth = 0;
-        self.dateMin = [NSDate date];
-        self.dateMax = [NSDate date];
+        self.dateMin = nil;
+        self.startDate = [NSDate date];
+        self.dateMax = nil;
     }
     return self;
 }
@@ -111,12 +112,12 @@
     
     NSDateComponents *dateComponents = [[NSDateComponents alloc] init];
     [dateComponents setMonth:self.currentMonth];
-    NSDate *dateForCurrentMonth = [calendar dateByAddingComponents:dateComponents toDate:self.dateMin options:0];
+    NSDate *dateForCurrentMonth = [calendar dateByAddingComponents:dateComponents toDate:self.startDate options:0];
     NSRange rng = [calendar rangeOfUnit:NSCalendarUnitDay inUnit:NSCalendarUnitMonth forDate:dateForCurrentMonth];
     self.maxDayOfCurrentMonth = rng.length;
     
     [dateComponents setMonth:self.currentMonth - 1];
-    NSDate *dateForPreviousMonth = [calendar dateByAddingComponents:dateComponents toDate:self.dateMin options:0];
+    NSDate *dateForPreviousMonth = [calendar dateByAddingComponents:dateComponents toDate:self.startDate options:0];
     rng = [calendar rangeOfUnit:NSCalendarUnitDay inUnit:NSCalendarUnitMonth forDate:dateForPreviousMonth];
     self.maxDayOfLastMonth = rng.length;
     
@@ -140,7 +141,7 @@
 - (NSString *)getCurrentMonthYearName{
     NSDateComponents *dateComponents = [[NSDateComponents alloc] init];
     [dateComponents setMonth:self.currentMonth];
-    NSDate *dateForCurrentMonth = [[NSCalendar currentCalendar] dateByAddingComponents:dateComponents toDate:self.dateMin options:0];
+    NSDate *dateForCurrentMonth = [[NSCalendar currentCalendar] dateByAddingComponents:dateComponents toDate:self.startDate options:0];
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"MMMM YYYY"];
     NSString *stringFromDate = [formatter stringFromDate:dateForCurrentMonth];
@@ -153,7 +154,9 @@
 - (void) buildCalendarViewInView:(UIView *)view withDelegate:(id)delegate andSelectionArray:(NSArray *)selectionArray{
     self.delegate = delegate;
     
-    [self addSelectionArray:selectionArray];
+    if (selectionArray){
+        [self addSelectionArray:selectionArray];
+    }
     [self configureCalendar];
     
     self.calendarView = [[[NSBundle mainBundle] loadNibNamed:@"LBCCalendarView" owner:nil options:nil] objectAtIndex:0];
@@ -227,6 +230,7 @@
 
 
 - (void) addSelectionArray:(NSArray *)selectionArray{
+    
     self.selectionArray = selectionArray;
     
     LBCSelection *firstSelection = [self.selectionArray objectAtIndex:0];
@@ -241,6 +245,7 @@
             self.dateMax = selection.endDate;
         }
     }
+    self.startDate = self.dateMin;
 }
 
 
@@ -290,19 +295,19 @@
         NSDateComponents *dateComponents = [[NSDateComponents alloc] init];
         
         [dateComponents setMonth:(self.currentMonth + 1)];
-        NSDate *dateForNextMonth = [calendar dateByAddingComponents:dateComponents toDate:self.dateMin options:0];
+        NSDate *dateForNextMonth = [calendar dateByAddingComponents:dateComponents toDate:self.startDate options:0];
         NSDateComponents *newComponents = [calendar components:NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay fromDate:dateForNextMonth];
         [newComponents setDay:1];
         NSDate *firstDayOfNextMonth = [calendar dateFromComponents:newComponents];
         
-        if ([firstDayOfNextMonth compare:self.dateMax] != NSOrderedDescending){
+        if (!self.dateMax || [firstDayOfNextMonth compare:self.dateMax] != NSOrderedDescending){
             self.currentMonth++;
             updateMonth = YES;
         }
     }
     else if (b.tag == LEFT_ARROW_TAG){
         
-        if (self.currentMonth > 0){
+        if (!self.dateMin || self.currentMonth > 0){
             self.currentMonth--;
             monthDirection = -1;
             updateMonth = YES;

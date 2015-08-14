@@ -24,7 +24,7 @@
             
             NSDateComponents *dateComponents = [[NSDateComponents alloc] init];
             [dateComponents setMonth:self.calendarObject.currentMonth];
-            NSDate *dateForCurrentMonth = [[NSCalendar currentCalendar] dateByAddingComponents:dateComponents toDate:calendarObject.dateMin options:0];
+            NSDate *dateForCurrentMonth = [[NSCalendar currentCalendar] dateByAddingComponents:dateComponents toDate:calendarObject.startDate options:0];
             NSDateComponents *components = [[NSCalendar currentCalendar] components: NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitWeekday | NSCalendarUnitDay fromDate:dateForCurrentMonth];
 
             components.weekday = weekDay == 0 ? weekDaySaturday : weekDay;

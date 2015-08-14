@@ -108,6 +108,7 @@ typedef NS_ENUM(NSInteger, WeekDay){
 @property (nonatomic, assign) NSInteger currentMonth;
 @property (nonatomic, strong) NSDate *dateMin;
 @property (nonatomic, strong) NSDate *dateMax;
+@property (nonatomic, strong) NSDate *startDate;
 
 @property (nonatomic, strong) NSArray * selectionArray;
 @property (nonatomic, strong) NSArray * selectionCurrentMonthArray;
