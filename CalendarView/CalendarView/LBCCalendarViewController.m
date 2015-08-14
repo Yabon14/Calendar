@@ -6,10 +6,10 @@
 //
 //
 
-#import "LBCCalendarViewControllerConstraint.h"
+#import "LBCCalendarViewController.h"
 #import "LBCCalendarView.h"
 
-@implementation LBCCalendarViewControllerConstraint
+@implementation LBCCalendarViewController
 
 - (void) viewDidLoad{
     [super viewDidLoad];

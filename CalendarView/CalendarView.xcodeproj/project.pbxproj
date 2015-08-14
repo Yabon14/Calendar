@@ -13,7 +13,7 @@
 		1C514C091B74D31A001216B0 /* LBCCalendarMonthView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C514C051B74D31A001216B0 /* LBCCalendarMonthView.m */; };
 		1C514C0C1B78CD50001216B0 /* LBCCalendarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C514C0B1B78CD50001216B0 /* LBCCalendarView.m */; };
 		1C514C0E1B78CDA6001216B0 /* LBCCalendarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C514C0D1B78CDA6001216B0 /* LBCCalendarView.xib */; };
-		1C988FA51B7A294400A2E9FD /* LBCCalendarViewControllerConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C988FA41B7A294400A2E9FD /* LBCCalendarViewControllerConstraint.m */; };
+		1C988FA51B7A294400A2E9FD /* LBCCalendarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C988FA41B7A294400A2E9FD /* LBCCalendarViewController.m */; };
 		1C988FA81B7A47E500A2E9FD /* LBCCalendarFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C988FA71B7A47E500A2E9FD /* LBCCalendarFooterView.m */; };
 		1CA9289E1B74B4E900E38A33 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CA9289D1B74B4E900E38A33 /* main.m */; };
 		1CA928A11B74B4E900E38A33 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CA928A01B74B4E900E38A33 /* AppDelegate.m */; };
@@ -46,8 +46,8 @@
 		1C514C0A1B78CD50001216B0 /* LBCCalendarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LBCCalendarView.h; sourceTree = "<group>"; };
 		1C514C0B1B78CD50001216B0 /* LBCCalendarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LBCCalendarView.m; sourceTree = "<group>"; };
 		1C514C0D1B78CDA6001216B0 /* LBCCalendarView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LBCCalendarView.xib; sourceTree = "<group>"; };
-		1C988FA31B7A294400A2E9FD /* LBCCalendarViewControllerConstraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LBCCalendarViewControllerConstraint.h; sourceTree = "<group>"; };
-		1C988FA41B7A294400A2E9FD /* LBCCalendarViewControllerConstraint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LBCCalendarViewControllerConstraint.m; sourceTree = "<group>"; };
+		1C988FA31B7A294400A2E9FD /* LBCCalendarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LBCCalendarViewController.h; sourceTree = "<group>"; };
+		1C988FA41B7A294400A2E9FD /* LBCCalendarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LBCCalendarViewController.m; sourceTree = "<group>"; };
 		1C988FA61B7A47E500A2E9FD /* LBCCalendarFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LBCCalendarFooterView.h; sourceTree = "<group>"; };
 		1C988FA71B7A47E500A2E9FD /* LBCCalendarFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LBCCalendarFooterView.m; sourceTree = "<group>"; };
 		1CA928981B74B4E900E38A33 /* CalendarView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CalendarView.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -114,8 +114,8 @@
 		1CA9289A1B74B4E900E38A33 /* CalendarView */ = {
 			isa = PBXGroup;
 			children = (
-				1C988FA31B7A294400A2E9FD /* LBCCalendarViewControllerConstraint.h */,
-				1C988FA41B7A294400A2E9FD /* LBCCalendarViewControllerConstraint.m */,
+				1C988FA31B7A294400A2E9FD /* LBCCalendarViewController.h */,
+				1C988FA41B7A294400A2E9FD /* LBCCalendarViewController.m */,
 				1C514BFD1B74D31A001216B0 /* LBCCalendar */,
 				1CA9289F1B74B4E900E38A33 /* AppDelegate.h */,
 				1CA928A01B74B4E900E38A33 /* AppDelegate.m */,
@@ -281,7 +281,7 @@
 				1C514C071B74D31A001216B0 /* LBCCalendarObject.m in Sources */,
 				1CA928A41B74B4E900E38A33 /* ViewController.m in Sources */,
 				1CA928A11B74B4E900E38A33 /* AppDelegate.m in Sources */,
-				1C988FA51B7A294400A2E9FD /* LBCCalendarViewControllerConstraint.m in Sources */,
+				1C988FA51B7A294400A2E9FD /* LBCCalendarViewController.m in Sources */,
 				1C514C0C1B78CD50001216B0 /* LBCCalendarView.m in Sources */,
 				1CA9289E1B74B4E900E38A33 /* main.m in Sources */,
 			);

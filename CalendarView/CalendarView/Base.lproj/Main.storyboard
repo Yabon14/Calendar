@@ -4,10 +4,10 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
     <scenes>
-        <!--Calendar View Controller Constraint-->
+        <!--Calendar View Controller-->
         <scene sceneID="8eG-I8-dAt">
             <objects>
-                <viewController id="Qbt-fw-fuc" customClass="LBCCalendarViewControllerConstraint" sceneMemberID="viewController">
+                <viewController id="Qbt-fw-fuc" customClass="LBCCalendarViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="EV4-uH-z1j"/>
                         <viewControllerLayoutGuide type="bottom" id="6iD-XR-hIb"/>
