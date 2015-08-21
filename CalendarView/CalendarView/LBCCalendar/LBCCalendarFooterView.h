@@ -8,6 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+@interface LBCCalendarFooterCellView : UITableViewCell
+
+@property (nonatomic, strong) UILabel *titleLabel;
+
+@end
+
 @interface LBCCalendarFooterView : UITableView
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *footerHeight;
 @end

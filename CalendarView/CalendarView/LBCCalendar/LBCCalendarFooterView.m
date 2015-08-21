@@ -8,6 +8,11 @@
 
 #import "LBCCalendarFooterView.h"
 
+@implementation LBCCalendarFooterCellView
+
+
+@end
+
 @implementation LBCCalendarFooterView
 
 

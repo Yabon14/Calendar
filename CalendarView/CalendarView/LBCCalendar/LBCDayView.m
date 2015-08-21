@@ -8,6 +8,8 @@
 
 #import "LBCDayView.h"
 #import "LBCCalendarObject.h"
+#import "LBCFont.h"
+#import "LBCColor.h"
 
 @implementation LBCDayView
 
@@ -20,9 +22,8 @@
     self.backgroundColor = [UIColor clearColor];
     self.text = labelText;
     self.textColor = C8;
-    self.highlightedTextColor = C6;
     
-    self.font = F10;
+    self.font = F17;
     
     _dayState = dayStateUnselected;
     self.dayState = state;
@@ -124,10 +125,7 @@
         maskLayer.path = maskPath.CGPath;
         self.layer.mask = maskLayer;
         self.backgroundColor = [UIColor orangeColor];
-        self.highlighted = YES;
-    }
-    else{
-        self.highlighted = NO;
+        self.textColor = C6;
     }
     
 }

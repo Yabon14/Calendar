@@ -63,6 +63,8 @@
 		1CA928B11B74B4E900E38A33 /* CalendarViewTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CalendarViewTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1CA928B61B74B4E900E38A33 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1CA928B71B74B4E900E38A33 /* CalendarViewTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CalendarViewTests.m; sourceTree = "<group>"; };
+		BAF2A7511B8758740038E38B /* LBCColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LBCColor.h; sourceTree = "<group>"; };
+		BAF2A7521B8758740038E38B /* LBCFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LBCFont.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,6 +116,8 @@
 		1CA9289A1B74B4E900E38A33 /* CalendarView */ = {
 			isa = PBXGroup;
 			children = (
+				BAF2A7511B8758740038E38B /* LBCColor.h */,
+				BAF2A7521B8758740038E38B /* LBCFont.h */,
 				1C988FA31B7A294400A2E9FD /* LBCCalendarViewController.h */,
 				1C988FA41B7A294400A2E9FD /* LBCCalendarViewController.m */,
 				1C514BFD1B74D31A001216B0 /* LBCCalendar */,
