@@ -62,6 +62,12 @@
         self.canGoToNextMonth = YES;
         
         self.calendarView = nil;
+        
+        //Default values
+        self.monthFont = F7;
+        self.dayNumberFont = F5;
+        self.weekDayFont = F5;
+
     }
     return self;
 }
@@ -79,9 +85,6 @@
     self.calendarView.backgroundColor = backgroundColor;
     self.calendarView.footerView.backgroundColor = backgroundColor;
 }
-
-
-
 
 - (void) buildCalendarViewInView:(UIView *)view withDelegate:(id)delegate andSelectionArray:(NSArray *)selectionArray{
     self.delegate = delegate;
@@ -294,18 +297,23 @@
             BOOL leftCurve = NO;
             BOOL rightCurve = NO;
             
+            BOOL forceLeftCurve = NO;
+            BOOL forceRightCurve = NO;
+            
             if (dayView.dateComponents.weekday == weekDayFriday) {
-                rightCurve = YES;
+                //forceRightCurve = YES;
             }
             else if (dayView.dateComponents.weekday == weekDaySaturday) {
-                leftCurve = YES;
+                //forceLeftCurve = YES;
             }
             if (dayView.dateComponents.day == 1) {
-                leftCurve = YES;
+                forceLeftCurve = YES;
             }
             if ([dayView isLastDayInMonth]) {
-                rightCurve = YES;
+                forceRightCurve = YES;
             }
+            
+            
             if ([[dayView dateForDayView] compare:startDate] == NSOrderedSame){
                 leftCurve = YES;
             }
@@ -313,7 +321,24 @@
                 rightCurve = YES;
             }
             
-            if (leftCurve && !rightCurve){
+            
+            
+            
+            
+            if ((forceLeftCurve && forceRightCurve)
+                || (forceLeftCurve && rightCurve)
+                || (forceRightCurve && leftCurve)){
+                dayView.dayState = dayStateOneDaySelected;
+            }
+            else if (forceRightCurve && !forceLeftCurve){
+                dayView.dayState = dayStateLastSelected;
+            }
+            else if (!forceRightCurve && forceLeftCurve){
+                dayView.dayState = dayStateFirstSelected;
+            }
+            
+            
+            else if (leftCurve && !rightCurve){
                 dayView.dayState = dayStateFirstSelected;
             }
             else if (!leftCurve && rightCurve){
@@ -338,13 +363,13 @@
     self.selectionArray = selectionArray;
     
     LBCSelection *firstSelection = [self.selectionArray objectAtIndex:0];
-    self.dateMin = firstSelection.startDate;
+    self.dateMin = [NSDate date]; //firstSelection.startDate; //Start Date is current month now
     self.dateMax = firstSelection.endDate;
     
     for (LBCSelection *selection in self.selectionArray) {
-        if ([self.dateMin compare:selection.startDate] == NSOrderedDescending) {
-            self.dateMin = selection.startDate;
-        }
+//        if ([self.dateMin compare:selection.startDate] == NSOrderedDescending) {
+//            self.dateMin = selection.startDate;
+//        }
         if ([self.dateMax compare:selection.endDate] == NSOrderedAscending) {
             self.dateMax = selection.endDate;
         }
@@ -490,11 +515,11 @@
     NSString *endDate = [formatter stringFromDate:selection.endDate];
     
 
-#warning for test - Use NSLocalizedStringTools in real project
+#warning Use stringWithFormat:NSLocalizedStringTools in production mode
 //    NSString *priceString = [NSString stringWithFormat:NSLocalizedStringTools(@"calendarRangePrice", nil), selection.price];
 //    NSString *completeString = [NSString stringWithFormat:NSLocalizedStringTools(@"calendarRangeDescriptionPriceText", nil), startDate, endDate, priceString];
-    NSString *priceString = [NSString stringWithFormat:NSLocalizedString(@"%lu€", @"%lu€"), selection.price];
-    NSString *completeString = [NSString stringWithFormat:NSLocalizedString(@"Du %@ au %@ : %@", @"Du %@ au %@ : %@"), startDate, endDate, priceString];
+    NSString *priceString = [NSString stringWithFormat:@"%lu€", selection.price];
+    NSString *completeString = [NSString stringWithFormat:@"Du %@ au %@ : %@", startDate, endDate, priceString];
     NSRange priceRange = [completeString rangeOfString:priceString];
     
     NSMutableAttributedString* attributedString = [[NSMutableAttributedString alloc] initWithString:completeString];

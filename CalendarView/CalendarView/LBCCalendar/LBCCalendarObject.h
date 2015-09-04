@@ -10,19 +10,21 @@
 
 
 
-#define SELECTED_HEIGHT_COEFF       0.8f    // height of selection = cell height * SELECTED_HEIGHT_COEFF
-#define TITLE_HEADER_COEFF          2/3     // height of month label = height of hedaer view * TITLE_HEADER_COEFF
-#define RADIUS_CELL_COEFF           0.5f    // For curve effect on selection
+#define SELECTED_HEIGHT_COEFF               0.8f    // height of selection = cell height * SELECTED_HEIGHT_COEFF
+#define TITLE_HEADER_COEFF                  2/3     // height of month label = height of hedaer view * TITLE_HEADER_COEFF
+#define RADIUS_CELL_COEFF                   0.5f    // For curve effect on selection
 
-#define LEFT_ARROW_TAG              2000
-#define RIGHT_ARROW_TAG             2001
+#define LEFT_ARROW_TAG                      2000
+#define RIGHT_ARROW_TAG                     2001
 
-#define MAX_WEEK_PER_MONTH          6
-#define MAX_DAY_PER_WEEK            7
+#define MAX_WEEK_PER_MONTH                  6
+#define MAX_DAY_PER_WEEK                    7
 
-#define CELL_HEIGHT                 44.f
+#define CELL_HEIGHT                         44.f
 
-#define CELL_MARGIN                 10.f
+#define CELL_MARGIN                         10.f
+
+#define DAY_VIEW_SELECTED_COLOR_OPACITY     0.8f
 
 
 typedef NS_ENUM (NSInteger, DayState){
@@ -31,7 +33,8 @@ typedef NS_ENUM (NSInteger, DayState){
     dayStateFirstSelected,
     dayStateSelected,
     dayStateLastSelected,
-    dayStateBothSelected
+    dayStateBothSelected,
+    dayStateOneDaySelected
 };
 
 
@@ -69,6 +72,9 @@ typedef NS_ENUM(NSInteger, WeekDay){
 @property (nonatomic, assign) NSInteger maxDayOfCurrentMonth;
 @property (nonatomic, assign) NSInteger currentMonth;
 @property (nonatomic, strong) NSDate *startDate;
+@property (nonatomic, strong) UIFont *monthFont;
+@property (nonatomic, strong) UIFont *weekDayFont;
+@property (nonatomic, strong) UIFont *dayNumberFont;
 
 
 #pragma mark - Proteccted
@@ -90,7 +96,6 @@ typedef NS_ENUM(NSInteger, WeekDay){
 - (void) buildCalendarViewInView:(UIView *)view withDelegate:(id)delegate andSelectionArray:(NSArray *)selectionArray;
 
 - (void) setCalendarBackgroundColor:(UIColor *)backgroundColor;
-
 
 
 

@@ -54,8 +54,8 @@
             components.day = currentDay;
             
             LBCDayView *dayView = (LBCDayView *)[self viewWithTag:monthDay];
-            if (dayView){
-                [dayView refreshWithComponent:components andDayState:dayState];
+            if (dayView && [dayView isKindOfClass:[LBCDayView class]]){
+                [dayView refreshWithComponent:components andDayState:dayState andDayFont:self.calendarObject.dayNumberFont];
                 dayView.isLastDayInMonth = isLastDayInMonth;
                 [tmpArray addObject:dayView];
             }

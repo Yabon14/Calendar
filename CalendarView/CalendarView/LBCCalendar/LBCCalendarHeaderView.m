@@ -16,8 +16,8 @@
 
     self.monthLabel.backgroundColor = [UIColor clearColor];
     self.monthLabel.text = [calendarObject getCurrentMonthYearName];
-    self.monthLabel.font = F7;
-        
+    self.monthLabel.font = calendarObject.monthFont;
+    
     self.leftButton.tag = LEFT_ARROW_TAG;
     self.rightButton.tag = RIGHT_ARROW_TAG;
 #pragma clang diagnostic push
@@ -39,8 +39,9 @@
     for (UILabel *dayLabel in dayLabelArray) {
         dayLabel.backgroundColor = [UIColor clearColor];
         dayLabel.textAlignment = NSTextAlignmentCenter;
-        dayLabel.text = [dayArray objectAtIndex:[dayLabelArray indexOfObject:dayLabel]];
-        dayLabel.font = F17;
+        dayLabel.text = [dayArray objectAtIndex:[dayLabelArray indexOfObject:dayLabel]];        
+        dayLabel.font = calendarObject.weekDayFont;
+
     }
 }
 
