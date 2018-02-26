@@ -8,32 +8,32 @@
 
 #import "LBCDayView.h"
 #import "LBCCalendarObject.h"
+#import "LBCFont.h"
+#import "LBCColor.h"
 
 @implementation LBCDayView
 
-- (id) initWithComponent:(NSDateComponents *)component
-             andDayState:(DayState)state
-                andFrame:(CGRect)frame{
+- (void) refreshWithComponent:(NSDateComponents *)component
+                  andDayState:(DayState)state
+                   andDayFont:(UIFont *)dayFont{
     
-    self = [super initWithFrame:frame];
-    if (self){
-        self.dateComponents = component;
-        NSString *labelText = [NSString stringWithFormat:@"%lu", (long)component.day];
-        self.dayLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
-        self.dayLabel.textAlignment = NSTextAlignmentCenter;
-        self.dayLabel.backgroundColor = [UIColor clearColor];
-        self.dayLabel.text = labelText;
+    self.dateComponents = component;
+    NSString *labelText = [NSString stringWithFormat:@"%lu", (long)component.day];
+    self.textAlignment = NSTextAlignmentCenter;
+    self.backgroundColor = [UIColor clearColor];
+    self.text = labelText;
+    self.textColor = C8;
+    self.font = dayFont;
 
-        self.dayLabel.textColor = C8;
-        self.dayLabel.highlightedTextColor = C6;
-        
-        [self addSubview:self.dayLabel];
-        self.backgroundColor = [UIColor clearColor];
-        
-        _dayState = dayStateUnselected;
-        self.dayState = state;
+    
+    _dayState = dayStateUnselected;
+    self.dayState = state;
+    
+    if (self.containerView)
+    {
+        [self.containerView removeFromSuperview];
+        self.containerView = nil;
     }
-    return self;
 }
 
 
@@ -62,7 +62,8 @@
             break;
         case dayStateLastSelected:
             if (state == dayStateFirstSelected){
-                state = dayStateSelected;
+                //state = dayStateSelected;
+                state = dayStateBothSelected;
             }
             else if (state == dayStateBothSelected){
                 state = dayStateLastSelected;
@@ -81,12 +82,15 @@
     }
 
     CGFloat radiusSize = RADIUS_CELL_COEFF * self.frame.size.height;
+    BOOL needAddMask = YES;
     switch (state) {
             case dayStateUnactive:
-                self.dayLabel.textColor = [UIColor clearColor];
+                self.textColor = [UIColor clearColor];
+                needAddMask = NO;
                 break;
 
             case dayStateUnselected:
+                needAddMask = NO;
             break;
             
             case dayStateFirstSelected:{
@@ -113,26 +117,73 @@
                 break;
             }
                 
-            case dayStateBothSelected:{
+            case dayStateOneDaySelected:{
                 maskPath = [UIBezierPath bezierPathWithRoundedRect:frame
                                                  byRoundingCorners:(UIRectCornerTopRight|UIRectCornerBottomRight|UIRectCornerTopLeft|UIRectCornerBottomLeft)
                                                        cornerRadii:CGSizeMake(radiusSize, radiusSize)];
                 break;
             }
-                
+            
+            case dayStateBothSelected:
+                break;
+            
             default:
+            needAddMask = NO;
                 break;
     }
     _dayState = state;
 
     
-    if (maskPath){
-        CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
-        maskLayer.frame = self.bounds;
-        maskLayer.path = maskPath.CGPath;
-        self.layer.mask = maskLayer;
-        self.backgroundColor = [UIColor orangeColor];
-        self.dayLabel.highlighted = YES;
+    if (needAddMask){
+        
+        if (self.dayState == dayStateBothSelected)
+        {
+            
+            //Add left curve layer
+            CGRect frameMaskLeftCurve = frame;
+            frameMaskLeftCurve.size.width += 5.f;
+            UIBezierPath *firstMaskPath = [UIBezierPath bezierPathWithRoundedRect:frameMaskLeftCurve
+                                                                byRoundingCorners:(UIRectCornerTopLeft|UIRectCornerBottomLeft)
+                                                                      cornerRadii:CGSizeMake(radiusSize, radiusSize)];
+            
+            CAShapeLayer *maskLayerLeftCurve = [[CAShapeLayer alloc] init];
+            maskLayerLeftCurve.frame = self.bounds;
+            maskLayerLeftCurve.path = firstMaskPath.CGPath;
+            
+            self.layer.mask = maskLayerLeftCurve;
+            
+            //Add right curve layer
+            CGRect frameMaskRightCurve = frame;
+            frameMaskRightCurve.size.width += 5.f;
+            frameMaskRightCurve.origin.x -= 5.f;
+            UIBezierPath *lastMaskPath = [UIBezierPath bezierPathWithRoundedRect:frameMaskRightCurve
+                                             byRoundingCorners:(UIRectCornerTopRight|UIRectCornerBottomRight)
+                                                   cornerRadii:CGSizeMake(radiusSize, radiusSize)];
+            
+            CAShapeLayer *maskLayerRightCurve = [[CAShapeLayer alloc] init];
+            maskLayerRightCurve.frame = self.bounds;
+            maskLayerRightCurve.path = lastMaskPath.CGPath;
+            
+            self.containerView = [[UIView alloc] initWithFrame:self.frame];
+            self.containerView.layer.mask = maskLayerRightCurve;
+            self.containerView.layer.mask.opacity = DAY_VIEW_SELECTED_COLOR_OPACITY;
+            self.containerView.backgroundColor = C2;
+            [self.superview addSubview:self.containerView];
+            [self.superview sendSubviewToBack:self.containerView];
+        }
+        else
+        {
+            CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
+            maskLayer.frame = self.bounds;
+            maskLayer.path = maskPath.CGPath;
+            self.layer.mask = maskLayer;
+
+        }
+        
+        self.layer.mask.opacity = DAY_VIEW_SELECTED_COLOR_OPACITY;
+        self.textColor = C6;
+        self.backgroundColor = C2;
+
     }
     
 }

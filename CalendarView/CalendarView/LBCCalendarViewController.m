@@ -7,9 +7,7 @@
 //
 
 #import "LBCCalendarViewController.h"
-#import "LBCCalendarObject.h"
-#import "LBCMonthView.h"
-
+#import "LBCCalendarView.h"
 
 @implementation LBCCalendarViewController
 
@@ -17,15 +15,15 @@
     [super viewDidLoad];
     
     self.view.backgroundColor = [UIColor whiteColor];
-    self.calBGView.backgroundColor = [UIColor yellowColor];
-    self.calendarObject = [[LBCCalendarObject alloc] init];
-//    UIView *calView = [self.calendarObject buildCalendarViewInFrame:self.view.frame];
-//    [self.view addSubview:calView];
+}
+
+
+- (void) viewDidAppear:(BOOL)animated{
     
-    UITapGestureRecognizer *tg = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(addSelection:)];
-    [self.view addGestureRecognizer:tg];
+    [super viewDidAppear:animated];
 
-
+    self.calObject = [[LBCCalendarObject alloc] init];
+    
     NSDateComponents *dateComponents = [[NSDateComponents alloc] init];
     [dateComponents setDay:24];
     NSDate *startDate = [[NSCalendar currentCalendar] dateByAddingComponents:dateComponents toDate:[NSDate date] options:0];
@@ -42,80 +40,45 @@
     [dateComponents setDay:48];
     NSDate *endDate3 = [[NSCalendar currentCalendar] dateByAddingComponents:dateComponents toDate:[NSDate date] options:0];
     
+    [dateComponents setDay:80];
+    NSDate *startDate4 = [[NSCalendar currentCalendar] dateByAddingComponents:dateComponents toDate:[NSDate date] options:0];
+    [dateComponents setDay:90];
+    NSDate *endDate4 = [[NSCalendar currentCalendar] dateByAddingComponents:dateComponents toDate:[NSDate date] options:0];
     
-    LBCSelection *selec = [[LBCSelection alloc] initWithStartDate:startDate andEndDate:endDate];
-    LBCSelection *selec2 = [[LBCSelection alloc] initWithStartDate:startDate2 andEndDate:endDate2];
-    LBCSelection *selec3 = [[LBCSelection alloc] initWithStartDate:startDate3 andEndDate:endDate3];
+    [dateComponents setDay:-20];
+    NSDate *startDate5 = [[NSCalendar currentCalendar] dateByAddingComponents:dateComponents toDate:[NSDate date] options:0];
+    [dateComponents setDay:-5];
+    NSDate *endDate5 = [[NSCalendar currentCalendar] dateByAddingComponents:dateComponents toDate:[NSDate date] options:0];
     
-    [self.calendarObject addSelectionArray:@[selec, selec2, selec3]];
     
-//    NSLog(@"%@", NSStringFromCGRect(self.calView.frame));
-//    if (self.view.frame.size.width < self.view.frame.size.height){
-//        self.topSpace.constant = self.view.frame.size.height * 0.5f - self.view.frame.size.width * 0.5f;
-//    }
-//    else{
-//        self.topSpace.constant = 0.f;
-//    }
-//    [self.calView setNeedsUpdateConstraints];
-//    NSLog(@"%@", NSStringFromCGRect(self.calView.frame));
+    LBCSelection *selec = [[LBCSelection alloc] initWithStartDate:startDate andEndDate:endDate andPrice:200];
+    LBCSelection *selec2 = [[LBCSelection alloc] initWithStartDate:startDate2 andEndDate:endDate2 andPrice:300];
+    LBCSelection *selec3 = [[LBCSelection alloc] initWithStartDate:startDate3 andEndDate:endDate3 andPrice:350];
+    LBCSelection *selec4 = [[LBCSelection alloc] initWithStartDate:startDate4 andEndDate:endDate4 andPrice:100];
+    LBCSelection *selec5 = [[LBCSelection alloc] initWithStartDate:startDate5 andEndDate:endDate5 andPrice:390];
+    
+    [self.calObject buildCalendarViewInView:self.calView withDelegate:self andSelectionArray:@[selec, selec2, selec3, selec4, selec5]];
+
+    
+    [self displayFromOfSubviewInView:self.view];
 }
 
 
-- (void) viewDidAppear:(BOOL)animated{
-    [super viewDidAppear:animated];
-    NSLog(@"self.calBGView.frame: %@", NSStringFromCGRect(self.calBGView.frame));
-    [self.calendarObject buildCalendarViewInView:self.view];
-    
-    NSLog(@"self.calBGView.frame: %@", NSStringFromCGRect(self.calendarObject.monthView.frame));
-    
-
-//    if (self.view.frame.size.width < self.view.frame.size.height){
-//        self.topSpace.constant = self.view.frame.size.height * 0.5f - self.view.frame.size.width * 0.5f;
-//    }
-//    else{
-//        self.topSpace.constant = 0.f;
-//    }
-//    [self.view setNeedsUpdateConstraints];
+- (IBAction)selector:(id)sender{
+    NSLog(@"selector");
 }
 
 
-- (void) addSelection:(id)sender{
-    
-//    self.topSpace.constant = 124.f;
-//    [self.calView setNeedsUpdateConstraints];
-    
-//    NSDateComponents *dateComponents = [[NSDateComponents alloc] init];
-//    [dateComponents setDay:24];
-//    NSDate *startDate = [[NSCalendar currentCalendar] dateByAddingComponents:dateComponents toDate:[NSDate date] options:0];
-//    [dateComponents setDay:31];
-//    NSDate *endDate = [[NSCalendar currentCalendar] dateByAddingComponents:dateComponents toDate:[NSDate date] options:0];
-//    
-//   
-//    [self.calendarObject addSelectionFromDate:startDate toDate:endDate];
+- (void) displayFromOfSubviewInView:(UIView *)view{
+    for (UIView * v in view.subviews) {
+        NSLog(@"Tag: %lu   and frame: %@ ", (long)v.tag, NSStringFromCGRect(v.frame));
+        [self displayFromOfSubviewInView:v];
+    }
 }
 
 
-- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id <UIViewControllerTransitionCoordinator>)coordinator{
-//    self.calBGView.center = CGPointMake(self.calBGView.center.x, self.calBGView.center.y + 10);
-    
-//    [self.calendarObject updateCalendarView:self.calBGView];
-    
-//    [self.calendarObject updateCalendarFrame:CGRectMake(0, 0, size.width, size.height)];
-
-    
-//    if (size.width < size.height){
-//        self.topSpace.constant = size.height * 0.5f - size.width * 0.5f;
-//    }
-//    else{
-//        self.topSpace.constant = 0.f;
-//    }
-//    [self.view setNeedsUpdateConstraints];
-//    
-//    NSLog(@"self.calView.frame: %@", NSStringFromCGRect(self.calView.frame));
-//    NSLog(@"self.view.frame: %@", NSStringFromCGRect(self.view.frame));
-//    NSLog(@"size: %@", NSStringFromCGSize(size));
-//    NSLog(@"self.topSpace.constant: %f", self.topSpace.constant);
-
+- (void)calendarFrameHasChangedOfFrame:(CGRect)frame{
+    NSLog(@"frame: %@", NSStringFromCGRect(frame));
 }
 
 @end

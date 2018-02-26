@@ -10,15 +10,15 @@
 #import "LBCCalendarObject.h"
 
 
-@interface LBCDayView : UIView
+@interface LBCDayView : UILabel
 
 @property (nonatomic, assign) DayState dayState;
-@property (nonatomic, strong) UILabel *dayLabel;
 @property (nonatomic, strong) NSDateComponents *dateComponents;
 @property (nonatomic, assign) BOOL isLastDayInMonth;
+@property (nonatomic, strong) UIView *containerView;
 
-- (id) initWithComponent:(NSDateComponents *)component
-             andDayState:(DayState)state
-                andFrame:(CGRect)frame;
+- (void) refreshWithComponent:(NSDateComponents *)component
+                  andDayState:(DayState)state
+                   andDayFont:(UIFont *)dayFont;
 - (NSDate *)dateForDayView;
 @end

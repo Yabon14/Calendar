@@ -7,13 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "LBCCalendarObject.h"
 
-@class LBCCalendarObject;
 
-@interface LBCCalendarViewController : UIViewController
-@property (nonatomic, strong) LBCCalendarObject *calendarObject;
-
+@interface LBCCalendarViewController : UIViewController <CalendarDelegate>
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *calViewHeight;
 @property (nonatomic, strong) IBOutlet UIView *calView;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *topSpace;
-@property (weak, nonatomic) IBOutlet UIView *calBGView;
+@property (nonatomic, strong) LBCCalendarObject *calObject;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *calViewWidth;
+
 @end
